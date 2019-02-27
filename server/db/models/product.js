@@ -28,3 +28,5 @@ const Product = db.define({
     }
   }
 })
+
+module.exports = Product

@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const Address = db.define({
+const Address = db.define('address', {
   street: {
     type: Sequelize.STRING
   },

@@ -31,7 +31,7 @@ const Supplier = db.define('supplier', {
     get() {
       return () => this.getDataValue('salt')
     }
-  },
+  }
 })
 
 module.exports = Supplier
@@ -64,7 +64,10 @@ Supplier.encryptPassword = function(plainText, salt) {
 const setSaltAndPassword = supplier => {
   if (supplier.changed('password')) {
     supplier.salt = Supplier.generateSalt()
-    supplier.password = Supplier.encryptPassword(supplier.password(), supplier.salt())
+    supplier.password = Supplier.encryptPassword(
+      supplier.password(),
+      supplier.salt()
+    )
   }
 }
 

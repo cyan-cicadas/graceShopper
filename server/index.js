@@ -105,7 +105,10 @@ const startListening = () => {
   require('./socket')(io)
 }
 
-const syncDb = () => db.sync()
+const syncDb = () => {
+  console.log('index.js:109')
+  db.sync()
+}
 
 async function bootApp() {
   await sessionStore.sync()

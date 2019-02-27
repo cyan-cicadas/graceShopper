@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
-const db = require('..')
+const db = require('../db')
 
-const Product = db.define({
+const Product = db.define('product', {
   varietal: {
     type: Sequelize.ENUM,
     values: ['Beef', 'Pork', 'Chicken', 'Lamb']

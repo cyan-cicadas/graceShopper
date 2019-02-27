@@ -31,7 +31,7 @@ const Consumer = db.define('consumer', {
     get() {
       return () => this.getDataValue('salt')
     }
-  },
+  }
 })
 
 module.exports = Consumer
@@ -64,7 +64,10 @@ Consumer.encryptPassword = function(plainText, salt) {
 const setSaltAndPassword = consumer => {
   if (consumer.changed('password')) {
     consumer.salt = Consumer.generateSalt()
-    consumer.password = Consumer.encryptPassword(consumer.password(), consumer.salt())
+    consumer.password = Consumer.encryptPassword(
+      consumer.password(),
+      consumer.salt()
+    )
   }
 }
 

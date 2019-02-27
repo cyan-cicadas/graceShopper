@@ -2,7 +2,15 @@ const crypto = require('crypto')
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const User = db.define('user', {
+const Supplier = db.define('supplier', {
+  firstName: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  lastName: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   email: {
     type: Sequelize.STRING,
     unique: true,
@@ -23,35 +31,26 @@ const User = db.define('user', {
     get() {
       return () => this.getDataValue('salt')
     }
-  },
-  googleId: {
-    type: Sequelize.STRING
-  },
-  street: {
-    type: Sequelize.STRING
-  },
-  city: {
-    type: Sequelize.STRING
   }
 })
 
-module.exports = User
+module.exports = Supplier
 
 /**
  * instanceMethods
  */
-User.prototype.correctPassword = function(candidatePwd) {
-  return User.encryptPassword(candidatePwd, this.salt()) === this.password()
+Supplier.prototype.correctPassword = function(candidatePwd) {
+  return Supplier.encryptPassword(candidatePwd, this.salt()) === this.password()
 }
 
 /**
  * classMethods
  */
-User.generateSalt = function() {
+Supplier.generateSalt = function() {
   return crypto.randomBytes(16).toString('base64')
 }
 
-User.encryptPassword = function(plainText, salt) {
+Supplier.encryptPassword = function(plainText, salt) {
   return crypto
     .createHash('RSA-SHA256')
     .update(plainText)
@@ -62,15 +61,18 @@ User.encryptPassword = function(plainText, salt) {
 /**
  * hooks
  */
-const setSaltAndPassword = user => {
-  if (user.changed('password')) {
-    user.salt = User.generateSalt()
-    user.password = User.encryptPassword(user.password(), user.salt())
+const setSaltAndPassword = supplier => {
+  if (supplier.changed('password')) {
+    supplier.salt = Supplier.generateSalt()
+    supplier.password = Supplier.encryptPassword(
+      supplier.password(),
+      supplier.salt()
+    )
   }
 }
 
-User.beforeCreate(setSaltAndPassword)
-User.beforeUpdate(setSaltAndPassword)
-User.beforeBulkCreate(users => {
+Supplier.beforeCreate(setSaltAndPassword)
+Supplier.beforeUpdate(setSaltAndPassword)
+Supplier.beforeBulkCreate(users => {
   users.forEach(setSaltAndPassword)
 })

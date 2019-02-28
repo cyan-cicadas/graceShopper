@@ -1,8 +1,10 @@
 const router = require('express').Router()
-const Consumer = require('../db/models')
-const Address = require('../db/models')
+const Consumer = require('./../db/models')
+const Address = require('./../db/models')
 
-router.get('/consumer/:consumerid', async (req, res, next) => {
+router.get('/:consumerid', async (req, res, next) => {
+  // need to add "isAdmin"
+
   try {
     const consumer = await Consumer.findAll(
       {
@@ -23,8 +25,10 @@ router.get('/consumer/:consumerid', async (req, res, next) => {
   }
 })
 
-router.post('/consumer', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
+    console.log(req)
+
     const [instance, wasCreated] = await Consumer.findOrCreate({
       where: req.body
     })
@@ -38,7 +42,7 @@ router.post('/consumer', async (req, res, next) => {
   }
 })
 
-router.put('/consumer/:consumerid', async (req, res, next) => {
+router.put('/:consumerid', async (req, res, next) => {
   try {
     const [numberOfAffectedRows, affectedRows] = await Consumer.update(
       req.body,
@@ -56,7 +60,7 @@ router.put('/consumer/:consumerid', async (req, res, next) => {
   }
 })
 
-router.delete('/consumer/:consumerid', async (req, res, next) => {
+router.delete('/:consumerid', async (req, res, next) => {
   try {
     const numAffectedRows = await Consumer.destroy({
       where: {

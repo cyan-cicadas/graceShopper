@@ -14,26 +14,61 @@ const Order = require('./order')
  */
 
 // Associations:::
-//
+
 Consumer.belongsTo(Address)
 
 // User <-> Product many-to-many:
+
 const Cart = db.define('cart', {
   quantity: Sequelize.INTEGER
 })
-Product.belongsToMany(User, {through: Cart})
-User.belongsToMany(Product, {through: Cart})
+
+Product.belongsToMany(Consumer, {through: Cart})
+
+Consumer.belongsToMany(Product, {through: Cart})
 
 // Cart <-> Order many-to-many
+
+Product.hasMany(Order) // the product is defined on the order
+
 Order.hasMany(Cart)
 
-/**
+/* 
+
+orders have a productId, quantity, weight, and completed status
+
+techboyz=# select * from orders;
+ id | quantity | weight | completed | createdAt | updatedAt | productId
+----+----------+--------+-----------+-----------+-----------+-----------
+(0 rows)
+
+the cart associates the order with the consumer
+
+techboyz=# select * from carts;
+ createdAt | updatedAt | consumerId | productId | orderId
+-----------+-----------+------------+-----------+---------
+(0 rows)
+
+
+	User -> One to Many -> Orders
+    
+    Order -> Many to Many -> Products
+    
+    Cart is property of Order
+
+*/
+
+/*
+
  * We'll export all of our models here, so that any time a module needs a model,
  * we can just require it from 'db/models'
  * for example, we can say: const {User} = require('../db/models')
  * instead of: const User = require('../db/models/user')
- */
+
+*/
+
 module.exports = {
-  User,
-  Consumer
+  Consumer,
+  Product,
+  Order
 }

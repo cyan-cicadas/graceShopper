@@ -26,6 +26,8 @@ router.get('/:consumerid', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
+  //
+
   try {
     console.log(req)
 

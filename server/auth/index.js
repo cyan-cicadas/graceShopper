@@ -3,14 +3,19 @@ const User = require('../db/models/user')
 const Consumer = require('../db/models/consumer')
 module.exports = router
 
+// full URL path is /auth
+
 router.post('/login', async (req, res, next) => {
   try {
     const consumer = await Consumer.findOne({where: {email: req.body.email}})
+
     if (!consumer) {
       console.log('No such user found:', req.body.email)
+
       res.status(401).send('Wrong username and/or password')
     } else if (!consumer.correctPassword(req.body.password)) {
       console.log('Incorrect password for user:', req.body.email)
+
       res.status(401).send('Wrong username and/or password')
     } else {
       req.login(consumer, err => (err ? next(err) : res.json(consumer)))
@@ -23,6 +28,7 @@ router.post('/login', async (req, res, next) => {
 router.post('/signup', async (req, res, next) => {
   try {
     const consumer = await Consumer.create(req.body)
+
     req.login(consumer, err => (err ? next(err) : res.json(consumer)))
   } catch (err) {
     if (err.name === 'SequelizeUniqueConstraintError') {

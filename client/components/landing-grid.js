@@ -1,30 +1,3 @@
-// import React from 'react'
-// import {Grid, Image} from 'semantic-ui-react';
-
-// const LandingGrid = () => {
-//     console.log('landing-grid.js:5')
-//     return (
-//     <Grid divided='vertically'>
-//         <Grid.Row columns={2} >
-//             <Grid.Column>
-//                 <Image src={imgBeef} />
-//             </Grid.Column>
-//             <Grid.Column>
-//                 <Image src={imgBeef} />
-//             </Grid.Column>
-//         </Grid.Row>
-//         <Grid.Row columns={2} >
-//             <Grid.Column>
-//                 <Image src={imgBeef} />
-//             </Grid.Column>
-//             <Grid.Column>
-//                 <Image src={imgBeef} />
-//             </Grid.Column>
-//         </Grid.Row>
-//     </Grid>
-//     )
-// }
-
 import React from 'react'
 import {Grid, Image} from 'semantic-ui-react'
 
@@ -56,7 +29,6 @@ export default LandigGrid
 
 const imgBeef =
   'https://crowdcow-images.imgix.net/https%3A%2F%2Fimages.ctfassets.net%2Fjigso8mmhmq2%2F1RoxqJrZXCQUWQAKqiUyem%2Ff36b036ca0ed53efa285e79a9149a100%2FBeef.png?ixlib=rails-2.1.4&w=1400&auto=compress%2C%20format&fit=min&s=8dd09b9c538cbcaeda5a8ec62aed45de'
-// const imgPork = 'https://crowdcow-images.imgix.net/https%3A%2F%2Fimages.ctfassets.net%2Fjigso8mmhmq2%2F4L2xGbfTirXRd9n8rY79EJ%2F9b426fcb5c0ab0825045650079324a77%2Fpork.png?ixlib=rails-2.1.4&w=1400&auto=compress%2C%20format&fit=min&s=dc3b9d3e535f548f77fa74a7cc2322ad'
 const imgPork =
   'https://crowdcow-images.imgix.net/https%3A%2F%2Fimages.ctfassets.net%2Fjigso8mmhmq2%2FFjkoTP9QwEaqgOw48cScg%2F95baf1ce7756cbf4993e3199c53cb909%2FPork.png?ixlib=rails-2.1.4&w=1400&auto=compress%2C%20format&fit=min&s=7fd1406e1886a72f604581a664e6545e'
 const imgChicken =

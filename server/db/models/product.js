@@ -2,30 +2,27 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Product = db.define('product', {
-  varietal: {
-    type: Sequelize.ENUM,
-    values: ['Beef', 'Pork', 'Chicken', 'Lamb']
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false
   },
   cut: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    allowNull: false
   },
-  quantity: {
-    type: Sequelize.SMALLINT,
+  category: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  price_per_pound: {
+    type: Sequelize.FLOAT,
     validate: {
       min: 0
     }
   },
-  weight: {
-    type: Sequelize.SMALLINT,
-    validate: {
-      min: 0
-    }
-  },
-  price: {
-    type: Sequelize.SMALLINT,
-    validate: {
-      min: 0
-    }
+  imgUrl: {
+    type: Sequelize.STRING,
+    allowNull: true
   }
 })
 

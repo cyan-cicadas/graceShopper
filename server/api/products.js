@@ -1,12 +1,14 @@
 const router = require('express').Router()
-const Products = require('../db/models')
-const Address = require('../db/models')
+const Product = require('./../db/models/product')
+const Address = require('./../db/models/address')
 
-router.get('/products/', async (req, res, next) => {
+// total path is /api/product
+
+router.get('/', async (req, res, next) => {
   try {
-    const Products = await Products.findAll()
+    const product = await Product.findAll()
 
-    res.json(Products)
+    res.json(product)
     res.end()
   } catch (error) {
     console.log(error)
@@ -14,15 +16,15 @@ router.get('/products/', async (req, res, next) => {
   }
 })
 
-router.get('/products/:productid', async (req, res, next) => {
+router.get('/:productid', async (req, res, next) => {
   try {
-    const Products = await Products.findAll({
+    const product = await Product.findAll({
       where: {
         id: req.params.productid
       }
     })
 
-    res.json(Products)
+    res.json(product)
     res.end()
   } catch (error) {
     console.log(error)
@@ -30,9 +32,9 @@ router.get('/products/:productid', async (req, res, next) => {
   }
 })
 
-router.post('/products', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
-    const [instance, wasCreated] = await Products.findOrCreate({
+    const [instance, wasCreated] = await Product.findOrCreate({
       where: req.body
     })
 
@@ -45,9 +47,9 @@ router.post('/products', async (req, res, next) => {
   }
 })
 
-router.put('/products/:productid', async (req, res, next) => {
+router.put('/:productid', async (req, res, next) => {
   try {
-    const [numberOfAffectedRows, affectedRows] = await Products.update(
+    const [numberOfAffectedRows, affectedRows] = await Product.update(
       req.body,
       {
         where: {id: req.params.productid},
@@ -63,9 +65,9 @@ router.put('/products/:productid', async (req, res, next) => {
   }
 })
 
-router.delete('/products/:productid', async (req, res, next) => {
+router.delete('/:productid', async (req, res, next) => {
   try {
-    const numAffectedRows = await Products.destroy({
+    const numAffectedRows = await Product.destroy({
       where: {
         id: req.params.productid
       }

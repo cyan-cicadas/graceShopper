@@ -1,33 +1,81 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Consumer} = require('../server/db/models')
+const Consumer = require('../server/db/models/consumer')
+const Product = require('../server/db/models/product')
 
 async function seed() {
   await db.sync({force: true})
-  console.log('db synced!')
 
-  const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+  const consumers = await Promise.all([
+    Consumer.create({
+      firstName: 'T Bone',
+      lastName: 'Burnette',
+      email: 't_bone@email.com',
+      password: '12345'
+    }),
+
+    Consumer.create({
+      firstName: '2na',
+      lastName: 'Phish',
+      email: '2na@email.com',
+      password: '123'
+    }),
+
+    Consumer.create({
+      firstName: 'Powk',
+      lastName: 'Chopper',
+      email: 'powk@email.com',
+      password: '123'
+    })
   ])
 
-  // const consumers = await Promise.all([
-  await Consumer.create({
-    firstName: 'first',
-    lastName: 'last',
-    email: 'cody@email.com',
-    password: '123'
-  })
-  // ])
+  const meatcutz = await Promise.all([
+    Product.create({
+      name: 'Rib Steak',
+      cut: 'Prime',
+      category: 'Beef',
+      price_per_pound: 10.0
+    }),
 
-  console.log(`seeded ${users.length} users`)
+    Product.create({
+      name: 'Top Sirloin Steak',
+      cut: 'Top',
+      category: 'Beef',
+      price_per_pound: 20.0
+    }),
+
+    Product.create({
+      name: 'Bone-In Butt Roast',
+      cut: 'decent',
+      category: 'Pork',
+      price_per_pound: 10.0
+    }),
+
+    Product.create({
+      name: 'Pasture-Raised Whole Chicken',
+      cut: 'Medium',
+      category: 'Chicken',
+      price_per_pound: 10.0
+    }),
+
+    Product.create({
+      name: 'Rack of Lamb, Frenched',
+      cut: 'Choice',
+      category: 'Lamb',
+      price_per_pound: 8.0
+    })
+  ])
+
+  console.log('db synced!')
+  console.log(`seeded ${consumers.length} users`)
   console.log(`seeded successfully`)
 }
 
 // We've separated the `seed` function from the `runSeed` function.
 // This way we can isolate the error handling and exit trapping.
 // The `seed` function is concerned only with modifying the database.
+
 async function runSeed() {
   console.log('seeding...')
   try {

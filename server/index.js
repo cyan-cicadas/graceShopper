@@ -19,6 +19,28 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 /**
+
+in the cart- route- 
+
+const isauthorized - helper function to validate
+that the user is authorized to access the cart
+route in express
+or isadmin
+
+call wth 
+
+run if isAuthorized 
+
+if the id attached to the request is the userid of the cart trying 
+to be accessed
+
+for get all - validate if admin
+
+using local storage for guests
+
+need to configure isAdmin
+
+
  * In your development environment, you can keep all of your
  * app's secret API keys in a file called `secrets.js`, in your project
  * root. This file is included in the .gitignore - it will NOT be tracked
@@ -65,7 +87,8 @@ const createApp = () => {
 
   // auth and api routes
   app.use('/auth', require('./auth'))
-  app.use('/api', require('./api'))
+  app.use('/api/product', require('./api/products'))
+  app.use('/api/consumer', require('./api/consumer'))
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))

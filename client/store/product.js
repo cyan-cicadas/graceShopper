@@ -1,3 +1,6 @@
+import {createStore, applyMiddleware} from 'redux'
+import thunkMiddleware from 'redux-thunk'
+import loggerMiddleware from 'redux-logger'
 import axios from 'axios'
 
 // Initial State
@@ -14,14 +17,15 @@ const getProdList = payload => ({
 
 // Thunk Creators
 export const getProdListTC = () => async dispatch => {
-  const {data} = await axios.get('/api/product')
-  dispatch(getProdList(data))
+  const res = await axios.get('/api/product')
+  dispatch(getProdList(res))
 }
 
 // Reducer
 export default (state = initialState, action = {}) => {
   switch (action.type) {
     case GET_PROD_LIST:
+      console.log(action.payload)
       return {...state, product: action.payload}
 
     default:

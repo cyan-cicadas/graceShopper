@@ -4,6 +4,7 @@ import Axios from 'axios'
 
 class ProductList extends Component {
   render() {
+    console.log(this.props)
     return <Item.Group divided />
   }
 }

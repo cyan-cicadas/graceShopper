@@ -13,7 +13,7 @@ const getProdList = payload => ({
 })
 
 // Thunk Creators
-const thunkProdList = () => async dispatch => {
+export const getProdListTC = () => async dispatch => {
   const {data} = await axios.get('/api/product')
   dispatch(getProdList(data))
 }

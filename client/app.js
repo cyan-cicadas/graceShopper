@@ -3,6 +3,7 @@ import React from 'react'
 import {Navbar} from './components'
 import Routes from './routes'
 import LandingGrid from './components/landing-grid'
+import ProductList from './components/product-list'
 
 const App = () => {
   return (
@@ -10,6 +11,7 @@ const App = () => {
       <Navbar />
       <Routes />
       <LandingGrid />
+      <ProductList />
     </div>
   )
 }

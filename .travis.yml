@@ -16,12 +16,25 @@ install:
 before_script:
   - psql -c 'create database "techboyz-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 
+before_deploy:
+  - npm run build-client # make the bundle
+  - rm -rf node_modules # omit from the tarball, since we skip cleanup
+deploy:
+  skip_cleanup: true # prevents travis from deleting the build
+  provider: heroku
+  app: techboyz # see README
+  api_key:
+    secure: ImbMUO0xSB6jm5agaNuy7RjdDfPGbo5fXftMchKpx/u+Sppt2wzFWqSGKWXWwXSlrMVr0xiOn0l5//HEgIcpGXpN17RKiwNHULTAaFFiEnMdy3eo0Ie4nUciLsZJXD2Tt66GrILILegTCe1+3EqEdSbg6ULQHTGghj+fN+f1A2itt0RyiJ3gZuOA0hlEU1PcYCnEAl/2NvazdJcSY53P2jyPD959N5BgCtyWMjNMnf+XChYpfpDZHCz5EIy8/Yhv/PX9dich8OzYqNfTIA5sM/RwZDd/4DW/aOpndTXJ3DiLbhkSQs00FUN6DJYthTkFjouapFMWCEe+rMaTLY4jrVf/hWc40uDItQkKcXLPkmA6zT1WfRhOb7UFYJDIrCV+zzZDem4AN4rpzmXx7skchQ+Hyf7wdhTJePiyUTSDmN5HLSVDbj4b7h8klm22JttKloSONs3i3lPhLT7xhWQtg3c4V0pfJyhDldntyih/8IOWRhx/LgFnBpf+1ScnEzt/0Q2LPaGZgDL+jgbaaUXhZdM6Am6GM9P5gpI6dGYtoTkR0nij/euS6xo6yh7baETVMXfM43LNrfpVClJo1UM0+IZ2FVa+7EzDFP5YdMeyjsiWMTEmrVQMyCIq0+aYTDmNDKstDs64thoXHKVJzQXjkE9wBQPoArvdlGpUmr6812E=# see README
+
+
+# HERES WHAT THE SOLUTION LOOKS LIKE
+
 # before_deploy:
 #   - npm run build-client # make the bundle
 #   - rm -rf node_modules # omit from the tarball, since we skip cleanup
 # deploy:
 #   skip_cleanup: true # prevents travis from deleting the build
 #   provider: heroku
-#   app: YOUR-HEROKU-APP-NAME-HERE # see README
+#   app: iamjoncannonexampleapp # see README
 #   api_key:
-#     secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+#     secure: VOFpVgVz6snCIzXthHVtL7ryXzPTCd9ZxHPhXaSPI/MizT+RYml5mbFoFg2DY9ZJBNvHAiFp0tHQ3CRID5Z/FTZyI7iLUI5f1JIYZrQQWX4SnO2JVOruzAQI6csazsWS8qvlXVuGeOEX/WCaboAslTAPSEjmkWEm5VevRP0JXhp/z+K1R8K59PHyKJZvFcwnmcza/EPMrvW0jXdHDZ2rqNawtnhyHTM5iwsFWIuOB0a3LW7TSJ8PCzSJeWmSsHpn1jma5M05YVDfK5iUqpHCLTopR3BgznluK1DpyOzRoirenEgn2M5TA25YBo5/Jd0kHIMk6BciOAkElv+wpIMLi9Mg/3AUAZNNQxGD/JSNceIs/qGu62EaQeTPNDvJhlsXfizAHR560dJTTKJ1yLWThgSn3s7KTRwKZ0YpsPOnMpJ5JpQVZMljEFu/62+fh7yFFgKGKmw2XzyHNnGV3rO1MWoRqRHLRyZ6BVpxpYjRd9wP6X+iOo7PUiPFR6tiriOuCWxqU+vCSXFKCdZIRMyYWFje17lpMCzdrR8EzlP4g513rLzLaXKwmz21RiGYbHnQAcvwRaStmLMRDr/5NfLfi0Y3A64TvQTmKSlgrSC7cXFiOplcoPfyy/DbgfMqEh/adx2403eSoO8fnuGoHejtf0G2e26DpRf8RWEj5VTvaAI=

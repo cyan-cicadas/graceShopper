@@ -3,6 +3,9 @@ import thunkMiddleware from 'redux-thunk'
 import loggerMiddleware from 'redux-logger'
 import axios from 'axios'
 
+// Middlewares
+const middlewares = applyMiddleware(loggerMiddleware, thunkMiddleware)
+
 // Initial State
 const initialState = {}
 
@@ -24,10 +27,10 @@ export const getProdListTC = () => async dispatch => {
 // Reducer
 export default (state = initialState, action = {}) => {
   switch (action.type) {
-    case GET_PROD_LIST:
+    case GET_PROD_LIST: {
       console.log(action.payload)
       return {...state, product: action.payload}
-
+    }
     default:
       return state
   }

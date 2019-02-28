@@ -19,12 +19,13 @@ before_script:
 before_deploy:
   - npm run build-client # make the bundle
   - rm -rf node_modules # omit from the tarball, since we skip cleanup
+  - npm run seed
 deploy:
   skip_cleanup: true # prevents travis from deleting the build
   provider: heroku
   app: techboyz # see README
   api_key:
-    secure: ImbMUO0xSB6jm5agaNuy7RjdDfPGbo5fXftMchKpx/u+Sppt2wzFWqSGKWXWwXSlrMVr0xiOn0l5//HEgIcpGXpN17RKiwNHULTAaFFiEnMdy3eo0Ie4nUciLsZJXD2Tt66GrILILegTCe1+3EqEdSbg6ULQHTGghj+fN+f1A2itt0RyiJ3gZuOA0hlEU1PcYCnEAl/2NvazdJcSY53P2jyPD959N5BgCtyWMjNMnf+XChYpfpDZHCz5EIy8/Yhv/PX9dich8OzYqNfTIA5sM/RwZDd/4DW/aOpndTXJ3DiLbhkSQs00FUN6DJYthTkFjouapFMWCEe+rMaTLY4jrVf/hWc40uDItQkKcXLPkmA6zT1WfRhOb7UFYJDIrCV+zzZDem4AN4rpzmXx7skchQ+Hyf7wdhTJePiyUTSDmN5HLSVDbj4b7h8klm22JttKloSONs3i3lPhLT7xhWQtg3c4V0pfJyhDldntyih/8IOWRhx/LgFnBpf+1ScnEzt/0Q2LPaGZgDL+jgbaaUXhZdM6Am6GM9P5gpI6dGYtoTkR0nij/euS6xo6yh7baETVMXfM43LNrfpVClJo1UM0+IZ2FVa+7EzDFP5YdMeyjsiWMTEmrVQMyCIq0+aYTDmNDKstDs64thoXHKVJzQXjkE9wBQPoArvdlGpUmr6812E=# see README
+    secure: ImbMUO0xSB6jm5agaNuy7RjdDfPGbo5fXftMchKpx/u+Sppt2wzFWqSGKWXWwXSlrMVr0xiOn0l5//HEgIcpGXpN17RKiwNHULTAaFFiEnMdy3eo0Ie4nUciLsZJXD2Tt66GrILILegTCe1+3EqEdSbg6ULQHTGghj+fN+f1A2itt0RyiJ3gZuOA0hlEU1PcYCnEAl/2NvazdJcSY53P2jyPD959N5BgCtyWMjNMnf+XChYpfpDZHCz5EIy8/Yhv/PX9dich8OzYqNfTIA5sM/RwZDd/4DW/aOpndTXJ3DiLbhkSQs00FUN6DJYthTkFjouapFMWCEe+rMaTLY4jrVf/hWc40uDItQkKcXLPkmA6zT1WfRhOb7UFYJDIrCV+zzZDem4AN4rpzmXx7skchQ+Hyf7wdhTJePiyUTSDmN5HLSVDbj4b7h8klm22JttKloSONs3i3lPhLT7xhWQtg3c4V0pfJyhDldntyih/8IOWRhx/LgFnBpf+1ScnEzt/0Q2LPaGZgDL+jgbaaUXhZdM6Am6GM9P5gpI6dGYtoTkR0nij/euS6xo6yh7baETVMXfM43LNrfpVClJo1UM0+IZ2FVa+7EzDFP5YdMeyjsiWMTEmrVQMyCIq0+aYTDmNDKstDs64thoXHKVJzQXjkE9wBQPoArvdlGpUmr6812E= # see README
 
 
 # HERES WHAT THE SOLUTION LOOKS LIKE

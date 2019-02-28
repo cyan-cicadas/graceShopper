@@ -20,15 +20,14 @@ const getProdList = payload => ({
 
 // Thunk Creators
 export const getProdListTC = () => async dispatch => {
-  const res = await axios.get('/api/product')
-  dispatch(getProdList(res))
+  const {data} = await axios.get('/api/product')
+  dispatch(getProdList(data))
 }
 
 // Reducer
 export default (state = initialState, action = {}) => {
   switch (action.type) {
     case GET_PROD_LIST: {
-      console.log(action.payload)
       return {...state, product: action.payload}
     }
     default:

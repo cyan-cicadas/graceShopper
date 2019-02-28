@@ -18,7 +18,7 @@ class ProductList extends Component {
         <Item.Group divided>
           {prodArr.map(prod => {
             return (
-              <Item>
+              <Item key={prod.id}>
                 <Item.Image src="https://dtgxwmigmg3gc.cloudfront.net/files/534e03a3c566d747b50029e3-icon-256x256.png" />
                 <Item.Content>
                   <Item.Header>{prod.name}</Item.Header>

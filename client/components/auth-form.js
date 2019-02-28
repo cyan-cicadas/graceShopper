@@ -18,13 +18,13 @@ const AuthForm = props => {
               <label htmlFor="firstName">
                 <small>firstName: </small>
               </label>
-              <input name="firstName" type="text" />
+              <input name="firstName" type="text" required />
             </div>
             <div>
               <label htmlFor="lastName">
                 <small>lastName: </small>
               </label>
-              <input name="lastName" type="text" />
+              <input name="lastName" type="text" required />
             </div>
           </div>
         ) : (
@@ -35,13 +35,24 @@ const AuthForm = props => {
           <label htmlFor="email">
             <small>Email</small>
           </label>
-          <input name="email" type="text" />
+          <input
+            name="email"
+            type="email"
+            required
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+          />
         </div>
         <div>
           <label htmlFor="password">
             <small>Password</small>
           </label>
-          <input name="password" type="password" />
+          <input
+            name="password"
+            type="password"
+            required
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+          />
         </div>
         <div>
           <button type="submit">{displayName}</button>

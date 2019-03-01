@@ -27,8 +27,24 @@ class ProductList extends Component {
                   </Item.Meta>
                   <Item.Description>{paragraph}</Item.Description>
                   <Item.Extra>
-                    <Label>{`Price/LB: $${prod.price_per_pound}`}</Label>
+
+                    <Label
+                      icon="dollar"
+                      content={`Price/LB: $${prod.price_per_pound}`}
+                    />
                   </Item.Extra>
+                  <Input
+                    action={{
+                      color: 'teal',
+                      labelPosition: 'left',
+                      icon: 'cart',
+                      content: 'Add to Cart'
+                    }}
+                    actionPosition="left"
+                    placeholder="Quantity"
+                    defaultValue="1"
+                    size="mini"
+                  />
                 </Item.Content>
               </Item>
             )

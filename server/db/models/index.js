@@ -13,9 +13,7 @@ const Order = require('./order')
  *    BlogPost.belongsTo(User)
  */
 
-// Associations:::
-
-Consumer.belongsTo(Address)
+// Associations
 
 // User <-> Product many-to-many:
 
@@ -23,11 +21,15 @@ const Cart = db.define('cart', {
   quantity: Sequelize.INTEGER
 })
 
+// Consumer.belongsTo(Address)
+
 Product.belongsToMany(Consumer, {through: Cart})
 
 Consumer.belongsToMany(Product, {through: Cart})
 
 // Cart <-> Order many-to-many
+
+Order.belongsTo(Address)
 
 Product.hasMany(Order) // the product is defined on the order
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Item, Image, Label, Input, ItemExtra} from 'semantic-ui-react'
+import {Item, Image, Label} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import {getProdListTC} from '../store/product'
 
@@ -27,6 +27,7 @@ class ProductList extends Component {
                   </Item.Meta>
                   <Item.Description>{paragraph}</Item.Description>
                   <Item.Extra>
+
                     <Label
                       icon="dollar"
                       content={`Price/LB: $${prod.price_per_pound}`}

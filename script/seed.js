@@ -3,6 +3,8 @@
 const db = require('../server/db')
 const Consumer = require('../server/db/models/consumer')
 const Product = require('../server/db/models/product')
+const Order = require('../server/db/models/order')
+const {CartItem} = require('../server/db/models/index')
 
 async function seed() {
   await db.sync({force: true})
@@ -27,6 +29,17 @@ async function seed() {
       lastName: 'Chopper',
       email: 'powk@email.com',
       password: '123'
+    })
+  ])
+
+  const orders = await Promise.all([
+    Order.create({
+      completed: true,
+      consumerId: 1
+    }),
+    Order.create({
+      completed: false,
+      consumerId: 1
     })
   ])
 
@@ -67,9 +80,36 @@ async function seed() {
     })
   ])
 
+  const cartitems = await Promise.all([
+    CartItem.create({
+      orderId: 1,
+      productId: 3,
+      quantity: 15
+    }),
+
+    CartItem.create({
+      orderId: 1,
+      productId: 2,
+      quantity: 20
+    }),
+
+    CartItem.create({
+      orderId: 2,
+      productId: 3,
+      quantity: 15
+    }),
+
+    CartItem.create({
+      orderId: 2,
+      productId: 4,
+      quantity: 20
+    })
+  ])
+
   console.log('db synced!')
   console.log(`seeded ${consumers.length} users`)
   console.log(`seeded successfully`)
+  // console.log(db)
 }
 
 // We've separated the `seed` function from the `runSeed` function.

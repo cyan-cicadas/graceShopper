@@ -15,49 +15,43 @@ const Order = require('./order')
 
 // Associations
 
-// User <-> Product many-to-many:
-
-const Cart = db.define('cart', {
+const CartItem = db.define('cartitem', {
   quantity: Sequelize.INTEGER
 })
 
 // Consumer.belongsTo(Address)
 
-Product.belongsToMany(Consumer, {through: Cart})
+Product.belongsToMany(Order, {through: CartItem})
 
-Consumer.belongsToMany(Product, {through: Cart})
+Order.belongsToMany(Product, {through: CartItem})
 
-// Cart <-> Order many-to-many
+Order.belongsTo(Consumer)
+
+Consumer.hasMany(Order)
 
 Order.belongsTo(Address)
 
-Product.hasMany(Order) // the product is defined on the order
+Address.hasOne(Consumer)
 
-Order.hasMany(Cart)
+/*
 
-/* 
+techboyz=# select * from products;
+ id |             name             |  cut   | category | price_per_pound | imgUrl |         createdAt          |         updatedAt
 
-orders have a productId, quantity, weight, and completed status
+
+techboyz=# select * from cartitems;
+ quantity | createdAt | updatedAt | productId | orderId
+----------+-----------+-----------+-----------+---------
+
 
 techboyz=# select * from orders;
- id | quantity | weight | completed | createdAt | updatedAt | productId
-----+----------+--------+-----------+-----------+-----------+-----------
+ id | completed | createdAt | updatedAt | consumerId | addressId
+----+-----------+-----------+-----------+------------+-----------
 (0 rows)
 
-the cart associates the order with the consumer
-
-techboyz=# select * from carts;
- createdAt | updatedAt | consumerId | productId | orderId
------------+-----------+------------+-----------+---------
-(0 rows)
-
-
-	User -> One to Many -> Orders
-    
-    Order -> Many to Many -> Products
-    
-    Cart is property of Order
-
+techboyz=# select * from consumers;
+ id | firstName | lastName |      email       |                             password                             |           salt           |         createdAt          |         updatedAt          | addressId
+----+-----------+----------+------------------+------------------------------------------------------------------+--------------------------+----------------------------+----------------------------+-----------
 */
 
 /*
@@ -70,6 +64,7 @@ techboyz=# select * from carts;
 */
 
 module.exports = {
+  CartItem,
   Consumer,
   Product,
   Order

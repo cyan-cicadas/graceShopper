@@ -24,8 +24,6 @@ router.get('/:consumerid', async (req, res, next) => {
       }
     )
 
-    console.log(cart)
-
     res.json(cart)
     res.end()
   } catch (error) {

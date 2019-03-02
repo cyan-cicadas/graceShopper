@@ -90,6 +90,7 @@ const createApp = () => {
   app.use('/api/product', require('./api/products'))
   app.use('/api/consumer', require('./api/consumer'))
   app.use('/api/cart', require('./api/cart'))
+  app.use('/api/order', require('./api/order'))
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))

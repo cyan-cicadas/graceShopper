@@ -44,10 +44,10 @@ class ProductList extends Component {
                       content: 'Add to Cart',
                       onClick: async () => {
                         const user = this.props.user // from mapState
-                        if (!user) {
+                        if (!Object.keys(user).length) {
                           alert('Please login or signup')
                         } else {
-                          console.log(prod, defaultQt)
+                          console.log(prod, defaultQt, user)
                         }
                       }
                     }}

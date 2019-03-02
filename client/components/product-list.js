@@ -1,15 +1,23 @@
 import React, {Component} from 'react'
+import axios from 'axios'
 import {Item, Image, Label, Input} from 'semantic-ui-react'
 import {connect} from 'react-redux'
-import {getProdListTC} from '../store/product'
+import {getProdListTC, addProdCartTC} from '../store/product'
+import navbar from './navbar'
 
 class ProductList extends Component {
+  handleInputChange(e) {
+    this.setState({
+      tempQt: e.target.value
+    })
+  }
   componentDidMount() {
     this.props.prodListFetch()
   }
   render() {
     console.log(this.props.product, 'product-list.js:11')
     const prodArr = this.props.product
+    let defaultQt = 1
     const paragraph = (
       <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
     )
@@ -33,11 +41,20 @@ class ProductList extends Component {
                     />
                   </Item.Extra>
                   <Input
+                    onChange={e => (defaultQt = e.target.value)}
                     action={{
                       color: 'teal',
                       labelPosition: 'left',
                       icon: 'cart',
-                      content: 'Add to Cart'
+                      content: 'Add to Cart',
+                      onClick: async () => {
+                        const {data: user} = await axios.get('auth/me')
+                        if (!user) {
+                          alert('Please login or signup')
+                        } else {
+                          console.log(prod, defaultQt)
+                        }
+                      }
                     }}
                     actionPosition="left"
                     placeholder="Quantity"
@@ -61,7 +78,8 @@ const mapState = state => {
 }
 
 const mapDispatch = dispatch => ({
-  prodListFetch: () => dispatch(getProdListTC())
+  prodListFetch: () => dispatch(getProdListTC()),
+  addProd: eventData => dispatch(addProdCartTC(eventData))
 })
 
 export default connect(mapState, mapDispatch)(ProductList)

@@ -6,16 +6,11 @@ import {getProdListTC, addProdCartTC} from '../store/product'
 import navbar from './navbar'
 
 class ProductList extends Component {
-  handleInputChange(e) {
-    this.setState({
-      tempQt: e.target.value
-    })
-  }
   componentDidMount() {
+    console.log(this.props)
     this.props.prodListFetch()
   }
   render() {
-    console.log(this.props.product, 'product-list.js:11')
     const prodArr = this.props.product
     let defaultQt = 1
     const paragraph = (
@@ -48,11 +43,11 @@ class ProductList extends Component {
                       icon: 'cart',
                       content: 'Add to Cart',
                       onClick: async () => {
-                        const {data: user} = await axios.get('auth/me')
-                        if (!user) {
+                        const user = this.props.user // from mapState
+                        if (!Object.keys(user).length) {
                           alert('Please login or signup')
                         } else {
-                          console.log(prod, defaultQt)
+                          console.log(prod, defaultQt, user)
                         }
                       }
                     }}
@@ -73,7 +68,8 @@ class ProductList extends Component {
 
 const mapState = state => {
   return {
-    product: state.productReducer.product
+    product: state.productReducer.product,
+    user: state.userReducer
   }
 }
 

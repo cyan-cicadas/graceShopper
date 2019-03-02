@@ -35,14 +35,18 @@ async function seed() {
       name: 'Rib Steak',
       cut: 'Prime',
       category: 'Beef',
-      price_per_pound: 10.0
+      price_per_pound: 10.0,
+      imgUrl:
+        'https://dtgxwmigmg3gc.cloudfront.net/files/534e03a3c566d747b50029e3-icon-256x256.png'
     }),
 
     Product.create({
       name: 'Top Sirloin Steak',
       cut: 'Top',
       category: 'Beef',
-      price_per_pound: 20.0
+      price_per_pound: 20.0,
+      imgUrl:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSpZCXDTmNYRHhGIrozqRVOYJ2To37rxwQLIyeuRo-1khMercj'
     }),
 
     Product.create({

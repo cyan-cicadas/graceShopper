@@ -13,11 +13,11 @@ router.post('/login', async (req, res, next) => {
       req.body.firstName +
       req.body.lastName
 
-    if (/[^a-zA-Z0-9\-\/]/.test(validations)) {
-      res.status(401).send('Fields Cannot Contain Special Characters')
+    // if (/[^a-zA-Z0-9\-\/]/.test(validations)) {
+    //   res.status(401).send('Fields Cannot Contain Special Characters')
 
-      return
-    }
+    //   return
+    // }
 
     const consumer = await Consumer.findOne({where: {email: req.body.email}})
 
@@ -48,22 +48,22 @@ router.post('/signup', async (req, res, next) => {
       req.body.firstName +
       req.body.lastName
 
-    if (/[^a-zA-Z0-9\-\/]/.test(validations)) {
-      console.log('hitting')
+    // if (/[^a-zA-Z0-9\-\/]/.test(validations)) {
+    //   console.log('hitting')
 
-      res.status(401).send('Fields Cannot Contain Special Characters')
-    } else {
-      const newUser = {
-        email: req.body.email,
-        password: req.body.password,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName
-      }
-
-      const consumer = await Consumer.create(req.body)
-
-      req.login(consumer, err => (err ? next(err) : res.json(consumer)))
+    //   res.status(401).send('Fields Cannot Contain Special Characters')
+    // } else {
+    const newUser = {
+      email: req.body.email,
+      password: req.body.password,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName
     }
+
+    const consumer = await Consumer.create(req.body)
+
+    req.login(consumer, err => (err ? next(err) : res.json(consumer)))
+    // }
   } catch (err) {
     if (err.name === 'SequelizeUniqueConstraintError') {
       res.status(401).send('User already exists')

@@ -1,7 +1,16 @@
 /*
 
 
+TIER 1: MVP SHOPPING EXPERIENCE
 
+๏ Two roles: guests (not signed in) and users (signed in)
+๏ Deployed (online!)
+๏ See all products
+
+๏ Add to cart / edit cart
+๏ Checkout (submit order)
+๏ Backend data validations
+๏ Rudiments of security
 
 
 

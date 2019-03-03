@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
 import {
@@ -13,8 +14,18 @@ import {
 } from 'semantic-ui-react'
 
 const LoginForm = props => {
-  console.log(props)
   const {name, displayName, handleSubmit, error} = props
+  const textFill = {
+    signup: {
+      header: 'Sign-up for an',
+      button: 'Sign Up'
+    },
+    login: {
+      header: 'Log-in to',
+      button: 'Login'
+    }
+  }
+  console.log(name)
   return (
     <div className="login-form">
       {/*
@@ -32,7 +43,7 @@ const LoginForm = props => {
       <Grid textAlign="center" style={{height: '100%'}} verticalAlign="middle">
         <Grid.Column style={{maxWidth: 450}}>
           <Header as="h2" color="teal" textAlign="center">
-            <Image src="/logo.png" /> Log-in to your account
+            {`${textFill[name].header} account`}
           </Header>
           <Form onSubmit={handleSubmit} name={name} size="large">
             <Segment stacked>
@@ -78,13 +89,15 @@ const LoginForm = props => {
               />
 
               <Button color="teal" fluid size="large" type="submit">
-                Login
+                {textFill[name].button}
               </Button>
             </Segment>
           </Form>
-          <Message>
-            New to us? <a href="#">Sign Up</a>
-          </Message>
+          {name === 'signup' ? null : (
+            <Message>
+              New to us? <Link to="/signup">Sign Up</Link>
+            </Message>
+          )}
         </Grid.Column>
       </Grid>
     </div>

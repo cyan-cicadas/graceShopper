@@ -3,52 +3,74 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-import {Segment, Menu, Container, Image, Button} from 'semantic-ui-react'
+import {
+  Segment,
+  Menu,
+  Container,
+  Image,
+  Button,
+  Label,
+  Icon
+} from 'semantic-ui-react'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <Segment
-      inverted
-      textAlign="center"
-      style={{padding: '1em 0em'}}
-      vertical
-    />
-    <Menu
-      fixed="top"
-      inverted="true"
-      // pointing={!fixed}
-      // secondary={!fixed}
-      size="large"
-    >
-      {isLoggedIn ? (
-        <Container>
-          <Link to="/home">
-            <Menu.Item>Home</Menu.Item>
-          </Link>
-          <Menu.Item position="right">
-            <Button onClick={handleClick}>Logout</Button>
-          </Menu.Item>
-        </Container>
-      ) : (
-        <Container>
-          <Link to="/home">
-            <Menu.Item>Home</Menu.Item>
-          </Link>
-          <Menu.Item position="right">
-            <Link to="/login">Login</Link>
-          </Menu.Item>
-        </Container>
-      )}
-    </Menu>
-  </div>
-)
+const Navbar = ({handleClick, isLoggedIn, user}) => {
+  return (
+    <div>
+      <Segment
+        inverted
+        textAlign="center"
+        style={{padding: '1em 0em'}}
+        vertical
+      />
+      <Menu
+        fixed="top"
+        inverted="true"
+        // pointing={!fixed}
+        // secondary={!fixed}
+        size="large"
+      >
+        {isLoggedIn ? (
+          <Container>
+            <Menu.Item>
+              <Link to="/home" position="left">
+                Home
+              </Link>
+            </Menu.Item>
+            <Menu.Item position="left">{`Welcome, ${
+              user.firstName
+            }`}</Menu.Item>
+            <Menu.Item position="right">
+              <Label>
+                <Icon name="cart" /> 0
+              </Label>
+            </Menu.Item>
+            <Menu.Item position="right">
+              <Button onClick={handleClick}>Logout</Button>
+            </Menu.Item>
+          </Container>
+        ) : (
+          <Container>
+            <Link to="/home">
+              <Menu.Item>Home</Menu.Item>
+            </Link>
+            <Menu.Item position="right">
+              <Link to="/login">Login</Link>
+            </Menu.Item>
+          </Container>
+        )}
+      </Menu>
+    </div>
+  )
+}
 
 /**
  * CONTAINER
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.userReducer.id
+    isLoggedIn: !!state.userReducer.id,
+    user: state.userReducer,
+    cart: state.cartReducer
   }
 }
 

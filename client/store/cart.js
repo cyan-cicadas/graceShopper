@@ -7,9 +7,7 @@ import axios from 'axios'
 const middlewares = applyMiddleware(loggerMiddleware, thunkMiddleware)
 
 // Initial State
-const initialState = {
-  cart: []
-}
+const initialState = []
 
 // Action Types
 const GET_CART = 'GET_CART'
@@ -28,9 +26,9 @@ const addToCart = payload => ({
 // Thunk Creators
 export const getCartTC = userId => async dispatch => {
   try {
-    // const cart = await axios.get('api/cart/1')
-    const {cart: data} = await axios.get(`api/cart/${userId}`)
-    dispatch(getCart(cart))
+    // const res = await axios.get('api/cart/1')
+    const res = await axios.get(`api/cart/${userId}`)
+    dispatch(getCart(res.data))
   } catch (getCartErr) {
     console.error(getCartErr)
   }

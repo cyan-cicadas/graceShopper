@@ -75,8 +75,7 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout())
-    },
-    fetchCart: userId => dispatch(getCartTC(userId))
+    }
   }
 }
 

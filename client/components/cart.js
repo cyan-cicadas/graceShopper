@@ -6,6 +6,7 @@ import {getCartTC} from '../store/cart'
 class Cart extends Component {
   componentDidMount() {
     const {fetchCart, user} = this.props
+    console.log(user.id)
     fetchCart(user.id)
     console.dir(this.props)
   }
@@ -31,7 +32,7 @@ class Cart extends Component {
 const mapState = state => {
   return {
     user: state.userReducer,
-    cart: state.cartReducer.data
+    cart: state.cartReducer
   }
 }
 

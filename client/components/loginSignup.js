@@ -131,7 +131,6 @@ const mapDispatch = dispatch => {
   return {
     handleSubmit(evt) {
       evt.preventDefault()
-      console.log(evt.target.email.value)
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
@@ -158,5 +157,3 @@ LoginForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.object
 }
-
-// export default LoginForm

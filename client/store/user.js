@@ -45,6 +45,10 @@ export const auth = (
       firstName,
       lastName
     })
+    console.log(method)
+    if (method === 'signup') {
+      console.log()
+    }
   } catch (authError) {
     return dispatch(getUser({error: authError}))
   }

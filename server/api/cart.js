@@ -6,6 +6,7 @@ const Product = require('./../db/models/product')
 
 router.get('/:consumerid', async (req, res, next) => {
   try {
+    console.log(req.params)
     const currentOrder = await Order.findAll({
       where: {
         consumerId: req.params.consumerid,

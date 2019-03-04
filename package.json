@@ -1,7 +1,7 @@
 {
   "name": "techboyz",
   "version": "1.0.0",
-  "description": "Our awesome Farmt-to-Table",
+  "description": "Our awesome Farm-to-Table",
   "engines": {
     "node": ">= 7.0.0"
   },
@@ -20,6 +20,8 @@
     "seed": "node script/seed.js",
     "start": "node server",
     "start-dev": "NODE_ENV='development' npm run build-client-watch & NODE_ENV='development' npm run start-server ",
+    "start-1": "npm run build-client-watch",
+    "start-2": "npm run start-server ",
     "start-server": "nodemon server -e html,js,scss --ignore public --ignore client",
     "test": "NODE_ENV='test' mocha \"./server/**/*.spec.js\" \"./client/**/*.spec.js\" \"./script/**/*.spec.js\" --require @babel/polyfill --require @babel/register"
   },

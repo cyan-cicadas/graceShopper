@@ -24,6 +24,27 @@ class Cart extends Component {
         return (sum += el.quantity)
       }, 0)
     }
+
+    const dummyCart = [
+      {
+        id: 1,
+        qt: 3,
+        name: 'Bone-In Porterhouse, 14 oz',
+        price: 18.99
+      },
+      {
+        id: 2,
+        qt: 2,
+        name: 'Tomahawk Ribeye, 24 oz',
+        price: 48.99
+      },
+      {
+        id: 3,
+        qt: 1,
+        name: 'Checken Liver, 12 oz.',
+        price: 9.99
+      }
+    ]
     return (
       <Modal
         open={open}
@@ -42,29 +63,33 @@ class Cart extends Component {
               <Table.Row>
                 <Table.HeaderCell>Qt</Table.HeaderCell>
                 <Table.HeaderCell>Product</Table.HeaderCell>
-                <Table.HeaderCell>Price/LB</Table.HeaderCell>
+                <Table.HeaderCell>Price/Each</Table.HeaderCell>
                 <Table.HeaderCell>Price Total</Table.HeaderCell>
+                <Table.HeaderCell>Edit/Delete</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              <Table.Row>
-                <Table.Cell>Cell</Table.Cell>
-                <Table.Cell>Cell</Table.Cell>
-                <Table.Cell>Cell</Table.Cell>
-                <Table.Cell>Cell</Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell>Cell</Table.Cell>
-                <Table.Cell>Cell</Table.Cell>
-                <Table.Cell>Cell</Table.Cell>
-                <Table.Cell>Cell</Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell>Cell</Table.Cell>
-                <Table.Cell>Cell</Table.Cell>
-                <Table.Cell>Cell</Table.Cell>
-                <Table.Cell>Cell</Table.Cell>
-              </Table.Row>
+              {dummyCart.map(item => {
+                return (
+                  <Table.Row key={item.id}>
+                    <Table.Cell>{item.qt}</Table.Cell>
+                    <Table.Cell>{item.name}</Table.Cell>
+                    <Table.Cell>{`$${item.price}`}</Table.Cell>
+                    <Table.Cell>{`$${item.price * item.qt}`}</Table.Cell>
+                    <Table.Cell>
+                      <Button.Group>
+                        <Button color="teal">Edit</Button>
+                        <Button.Or />
+                        <Button color="red" icon>
+                          <Icon name="trash alternate" />
+                        </Button>
+                      </Button.Group>
+                      )
+                    </Table.Cell>
+                  </Table.Row>
+                )
+              })}
+
             </Table.Body>
           </Table>
         </Modal.Content>

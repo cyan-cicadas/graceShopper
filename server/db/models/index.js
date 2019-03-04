@@ -31,7 +31,7 @@ Consumer.hasMany(Order)
 
 Order.belongsTo(Address)
 
-Address.hasOne(Consumer)
+//Address.hasOne(Consumer)
 
 /*
 

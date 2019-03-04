@@ -32,7 +32,9 @@ const Navbar = ({handleClick, isLoggedIn, user}) => {
             <Menu.Item position="left">{`Welcome, ${
               user.firstName
             }`}</Menu.Item>
-            <Cart />
+            <Menu.Item position="right">
+              <Cart />
+            </Menu.Item>
             <Menu.Item position="right">
               <Button onClick={handleClick}>Logout</Button>
             </Menu.Item>
@@ -66,8 +68,7 @@ const Navbar = ({handleClick, isLoggedIn, user}) => {
 const mapState = state => {
   return {
     isLoggedIn: !!state.userReducer.id,
-    user: state.userReducer,
-    cart: state.cartReducer
+    user: state.userReducer
   }
 }
 

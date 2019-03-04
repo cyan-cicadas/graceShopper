@@ -65,6 +65,14 @@ export const auth = (
   } catch (createCartErr) {
     console.error(createCartErr)
   }
+
+  // try {
+  //   const {cartArr: data} = await axios.get(`/api/cart/${data.id}`)
+  //   console.log(cartArr)
+  // } catch (createCartErr) {
+  //   console.error(createCartErr)
+  // }
+
 }
 
 export const logout = () => async dispatch => {
@@ -83,6 +91,7 @@ export const logout = () => async dispatch => {
 export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
+      console.dir(action.user)
       return action.user
     case REMOVE_USER:
       return defaultUser

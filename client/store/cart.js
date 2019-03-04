@@ -2,6 +2,7 @@ import {createStore, applyMiddleware} from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import loggerMiddleware from 'redux-logger'
 import axios from 'axios'
+import cart from '../components/cart'
 
 // Middlewares
 const middlewares = applyMiddleware(loggerMiddleware, thunkMiddleware)
@@ -12,6 +13,7 @@ const initialState = []
 // Action Types
 const GET_CART = 'GET_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
+const DELETE_ROW = 'DELETE_ROW'
 
 // Action Creators
 const getCart = payload => ({
@@ -21,6 +23,11 @@ const getCart = payload => ({
 const addToCart = payload => ({
   type: ADD_TO_CART,
   payload
+})
+
+const deleteRow = payload => ({
+  type: DELETE_ROW,
+  payload // cartItemId
 })
 
 // Thunk Creators
@@ -38,7 +45,10 @@ export const getCartTC = userId => async dispatch => {
 export default (state = initialState, action = {}) => {
   switch (action.type) {
     case GET_CART:
+      // object into array
       return action.payload
+    case DELETE_ROW:
+      return cart.filter(item => item.id !== action.payload)
     default:
       return state
   }

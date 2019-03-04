@@ -8,7 +8,7 @@ import ProductList from './components/product-list'
 const App = () => {
   return (
     <div>
-      {/* <Navbar /> */}
+      <Navbar />
       <Routes />
       <LandingGrid />
       <ProductList />

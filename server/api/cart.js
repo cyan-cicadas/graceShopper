@@ -4,9 +4,14 @@ const Address = require('./../db/models')
 const Order = require('./../db/models/order')
 const Product = require('./../db/models/product')
 
+/*
+
+curl localhost:8080/api/cart/1
+
+*/
+
 router.get('/:consumerid', async (req, res, next) => {
   try {
-    console.log(req.params)
     const currentOrder = await Order.findAll({
       where: {
         consumerId: req.params.consumerid,
@@ -25,21 +30,26 @@ router.get('/:consumerid', async (req, res, next) => {
       }
     )
 
-    res.json(cart)
+    let populatedCart = {
+      ...cart
+    }
+
+    for (let item of cart) {
+      let thisItem = await Product.findById(item.productId)
+      populatedCart[thisItem.name] = thisItem
+    }
+
+    res.json(populatedCart)
     res.end()
   } catch (error) {
     console.log(error)
     next(error)
   }
 })
-/*
+
 router.post('/', async (req, res, next) => {
-  //
-
   try {
-    console.log(req)
-
-    const [instance, wasCreated] = await Cart.findOrCreate({
+    const [instance, wasCreated] = await CartItem.findOrCreate({
       where: req.body
     })
 
@@ -52,12 +62,12 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.put('/:cartid', async (req, res, next) => {
+router.put('/', async (req, res, next) => {
   try {
-    const [numberOfAffectedRows, affectedRows] = await Cart.update(
+    const [numberOfAffectedRows, affectedRows] = await CartItem.update(
       req.body,
       {
-        where: {id: req.params.cartid},
+        where: {id: req.body.productId},
         returning: true,
         plain: true
       }
@@ -70,25 +80,25 @@ router.put('/:cartid', async (req, res, next) => {
   }
 })
 
-router.delete('/:cartid', async (req, res, next) => {
-  try {
-    const numAffectedRows = await Cart.destroy({
-      where: {
-        id: req.params.cartid
-      }
-    })
+// router.delete('/:cartid', async (req, res, next) => {
+//   try {
+//     const numAffectedRows = await Cart.destroy({
+//       where: {
+//         id: req.params.cartid
+//       }
+//     })
 
-    res.end(`${numAffectedRows} destroyed`)
-  } catch (error) {
-    console.error(error)
-    next(error)
-  }
-})
+//     res.end(`${numAffectedRows} destroyed`)
+//   } catch (error) {
+//     console.error(error)
+//     next(error)
+//   }
+// })
 
 router.use((req, res, next) => {
   const err = new Error('API route not found!')
   err.status = 404
   next(err)
 })
-*/
+
 module.exports = router

@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import axios from 'axios'
 import {MenuItem, Label, Icon, Modal, Table, Button} from 'semantic-ui-react'
-import {getCartTC} from '../store/cart'
+import {getCartTC, delItem} from '../store/cart'
 
 class Cart extends Component {
   state = {open: false}
@@ -15,15 +16,42 @@ class Cart extends Component {
     console.dir(this.props)
   }
 
+  async handleDelete(cartItemId) {
+    await axios.delete(`api/cart/${cartItemId}`)
+    this.props.deleteItem(cartItemId)
+  }
+
   render() {
     const {cart} = this.props
     const {open} = this.state
+    console.dir(this.props)
     let cartQt = 0
     if (cart) {
-      cartQt = cart.reduce((sum, el) => {
-        return (sum += el.quantity)
-      }, 0)
+      // cartQt = cart.reduce((sum, el) => {
+      //   return (sum += el.quantity)
+      // }, 0)
     }
+
+    const dummyCart = [
+      {
+        id: 1,
+        qt: 3,
+        name: 'Bone-In Porterhouse, 14 oz',
+        price: 18.99
+      },
+      {
+        id: 2,
+        qt: 2,
+        name: 'Tomahawk Ribeye, 24 oz',
+        price: 48.99
+      },
+      {
+        id: 3,
+        qt: 1,
+        name: 'Checken Liver, 12 oz.',
+        price: 9.99
+      }
+    ]
     return (
       <Modal
         open={open}
@@ -42,29 +70,32 @@ class Cart extends Component {
               <Table.Row>
                 <Table.HeaderCell>Qt</Table.HeaderCell>
                 <Table.HeaderCell>Product</Table.HeaderCell>
-                <Table.HeaderCell>Price/LB</Table.HeaderCell>
+                <Table.HeaderCell>Price/Each</Table.HeaderCell>
                 <Table.HeaderCell>Price Total</Table.HeaderCell>
+                <Table.HeaderCell>Edit/Delete</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              <Table.Row>
-                <Table.Cell>Cell</Table.Cell>
-                <Table.Cell>Cell</Table.Cell>
-                <Table.Cell>Cell</Table.Cell>
-                <Table.Cell>Cell</Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell>Cell</Table.Cell>
-                <Table.Cell>Cell</Table.Cell>
-                <Table.Cell>Cell</Table.Cell>
-                <Table.Cell>Cell</Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell>Cell</Table.Cell>
-                <Table.Cell>Cell</Table.Cell>
-                <Table.Cell>Cell</Table.Cell>
-                <Table.Cell>Cell</Table.Cell>
-              </Table.Row>
+              {dummyCart.map(item => {
+                return (
+                  <Table.Row key={item.id}>
+                    <Table.Cell>{item.qt}</Table.Cell>
+                    <Table.Cell>{item.name}</Table.Cell>
+                    <Table.Cell>{`$${item.price}`}</Table.Cell>
+                    <Table.Cell>{`$${item.price * item.qt}`}</Table.Cell>
+                    <Table.Cell>
+                      <Button.Group>
+                        <Button color="teal">Edit</Button>
+                        <Button.Or />
+                        <Button color="red" icon onClick={this.handleDelete}>
+                          <Icon name="trash alternate" />
+                        </Button>
+                      </Button.Group>
+                      )
+                    </Table.Cell>
+                  </Table.Row>
+                )
+              })}
             </Table.Body>
           </Table>
         </Modal.Content>
@@ -94,7 +125,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    fetchCart: userId => dispatch(getCartTC(userId))
+    fetchCart: userId => dispatch(getCartTC(userId)),
+    deleteItem: cartItemId => dispatch(delItem(cartItemId))
   }
 }
 

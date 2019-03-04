@@ -35,6 +35,7 @@ export const getCartTC = userId => async dispatch => {
   try {
     // const res = await axios.get('api/cart/1')
     const res = await axios.get(`api/cart/${userId}`)
+    //console.log(res.data[0].productInfo.name)
     dispatch(getCart(res.data))
   } catch (getCartErr) {
     console.error(getCartErr)

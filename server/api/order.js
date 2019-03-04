@@ -30,6 +30,23 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+// put route to update route on checkout
+
+router.put('/:orderId', async (req, res, next) => {
+  try {
+    const [numberOfAffectedRows, affectedRows] = await Order.update(req.body, {
+      where: {id: req.params.orderId},
+      returning: true,
+      plain: true
+    })
+
+    res.json(affectedRows.dataValues)
+    res.end()
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.use((req, res, next) => {
   const err = new Error('API route not found!')
   err.status = 404

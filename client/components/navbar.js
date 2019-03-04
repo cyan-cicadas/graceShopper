@@ -3,15 +3,8 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-import {
-  Segment,
-  Menu,
-  Container,
-  Image,
-  Button,
-  Label,
-  Icon
-} from 'semantic-ui-react'
+import {Segment, Menu, Container, Image, Button} from 'semantic-ui-react'
+import Cart from './cart'
 
 const Navbar = ({handleClick, isLoggedIn, user}) => {
   return (
@@ -40,9 +33,7 @@ const Navbar = ({handleClick, isLoggedIn, user}) => {
               user.firstName
             }`}</Menu.Item>
             <Menu.Item position="right">
-              <Label>
-                <Icon name="cart" /> 0
-              </Label>
+              <Cart />
             </Menu.Item>
             <Menu.Item position="right">
               <Button onClick={handleClick}>Logout</Button>
@@ -62,6 +53,14 @@ const Navbar = ({handleClick, isLoggedIn, user}) => {
     </div>
   )
 }
+// class Navbar extends Component {
+//   componentDidMount() {
+//     console.dir(this.props)
+//   }
+//   render() {
+//     const {handleClick, isLoggedIn, user} = this.props
+//   }
+// }
 
 /**
  * CONTAINER
@@ -69,8 +68,7 @@ const Navbar = ({handleClick, isLoggedIn, user}) => {
 const mapState = state => {
   return {
     isLoggedIn: !!state.userReducer.id,
-    user: state.userReducer,
-    cart: state.cartReducer
+    user: state.userReducer
   }
 }
 

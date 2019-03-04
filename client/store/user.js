@@ -65,12 +65,14 @@ export const auth = (
   } catch (createCartErr) {
     console.error(createCartErr)
   }
+
   // try {
   //   const {cartArr: data} = await axios.get(`/api/cart/${data.id}`)
   //   console.log(cartArr)
   // } catch (createCartErr) {
   //   console.error(createCartErr)
   // }
+
 }
 
 export const logout = () => async dispatch => {

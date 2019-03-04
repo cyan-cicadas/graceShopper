@@ -7,31 +7,38 @@ import axios from 'axios'
 const middlewares = applyMiddleware(loggerMiddleware, thunkMiddleware)
 
 // Initial State
-const initialState = {
-  cart: []
-}
+const initialState = []
 
 // Action Types
+const GET_CART = 'GET_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
 
 // Action Creators
+const getCart = payload => ({
+  type: GET_CART,
+  payload
+})
 const addToCart = payload => ({
   type: ADD_TO_CART,
   payload
 })
 
 // Thunk Creators
-export const addToCartTC = data => async dispatch => {
-  console.log(data)
-  // await axios.post('api/product')
+export const getCartTC = userId => async dispatch => {
+  try {
+    // const res = await axios.get('api/cart/1')
+    const res = await axios.get(`api/cart/${userId}`)
+    dispatch(getCart(res.data))
+  } catch (getCartErr) {
+    console.error(getCartErr)
+  }
 }
 
 // Reducer
 export default (state = initialState, action = {}) => {
   switch (action.type) {
-    case ADD_TO_CART: {
-      return {...state, cart: action.payload}
-    }
+    case GET_CART:
+      return action.payload
     default:
       return state
   }

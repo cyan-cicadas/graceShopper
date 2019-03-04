@@ -20,18 +20,18 @@ if (process.env.NODE_ENV === 'test') {
 
 /**
 
-in the cart- route- 
+in the cart- route-
 
 const isauthorized - helper function to validate
 that the user is authorized to access the cart
 route in express
 or isadmin
 
-call wth 
+call wth
 
-run if isAuthorized 
+run if isAuthorized
 
-if the id attached to the request is the userid of the cart trying 
+if the id attached to the request is the userid of the cart trying
 to be accessed
 
 for get all - validate if admin
@@ -131,7 +131,6 @@ const startListening = () => {
 }
 
 const syncDb = () => {
-  console.log('index.js:109')
   db.sync()
 }
 

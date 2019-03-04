@@ -7,7 +7,6 @@ import navbar from './navbar'
 
 class ProductList extends Component {
   componentDidMount() {
-    console.log(this.props)
     this.props.prodListFetch()
   }
   render() {

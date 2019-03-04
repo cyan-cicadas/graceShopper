@@ -95,7 +95,6 @@ const mapDispatch = dispatch => {
       const email = evt.target.email.value
       const password = evt.target.password.value
       if (formName === 'signup') {
-        console.log('autgh-form.js:98')
         const firstName = evt.target.firstName.value
         const lastName = evt.target.lastName.value
         dispatch(auth(email, password, formName, firstName, lastName))
@@ -106,8 +105,8 @@ const mapDispatch = dispatch => {
   }
 }
 
-export const Login = connect(mapLogin, mapDispatch)(AuthForm)
-export const Signup = connect(mapSignup, mapDispatch)(AuthForm)
+// export const Login = connect(mapLogin, mapDispatch)(AuthForm)
+// export const Signup = connect(mapSignup, mapDispatch)(AuthForm)
 
 /**
  * PROP TYPES

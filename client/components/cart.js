@@ -76,13 +76,16 @@ class Cart extends Component {
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {dummyCart.map(item => {
+              {cart.map(item => {
                 return (
                   <Table.Row key={item.id}>
-                    <Table.Cell>{item.qt}</Table.Cell>
-                    <Table.Cell>{item.name}</Table.Cell>
-                    <Table.Cell>{`$${item.price}`}</Table.Cell>
-                    <Table.Cell>{`$${item.price * item.qt}`}</Table.Cell>
+                    <Table.Cell>{item.quantity}</Table.Cell>
+                    <Table.Cell>{item.productInfo.name}</Table.Cell>
+                    <Table.Cell>{`$${
+                      item.productInfo.price_per_pound
+                    }`}</Table.Cell>
+                    <Table.Cell>{`$${item.productInfo.price_per_pound *
+                      item.quantity}`}</Table.Cell>
                     <Table.Cell>
                       <Button.Group>
                         <Button color="teal">Edit</Button>

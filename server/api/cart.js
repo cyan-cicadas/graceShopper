@@ -30,16 +30,15 @@ router.get('/:consumerid', async (req, res, next) => {
       }
     )
 
-    let populatedCart = {
-      ...cart
-    }
+    let count = 0
 
     for (let item of cart) {
       let thisItem = await Product.findById(item.productId)
-      populatedCart[thisItem.name] = thisItem
+      cart[count].productInfo = thisItem
+      count++
     }
 
-    res.json(populatedCart)
+    res.json(cart)
     res.end()
   } catch (error) {
     console.log(error)

@@ -24,6 +24,7 @@ class Cart extends Component {
         return (sum += el.quantity)
       }, 0)
     }
+
     const dummyCart = [
       {
         id: 1,
@@ -88,6 +89,7 @@ class Cart extends Component {
                   </Table.Row>
                 )
               })}
+
             </Table.Body>
           </Table>
         </Modal.Content>

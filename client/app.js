@@ -15,6 +15,5 @@ const App = () => {
     </div>
   )
 }
-//  Comment for git
 
 export default App

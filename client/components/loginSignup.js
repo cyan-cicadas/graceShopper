@@ -26,6 +26,7 @@ const LoginForm = props => {
     }
   }
   console.log(name)
+
   return (
     <div className="login-form">
       {/*
@@ -92,6 +93,13 @@ const LoginForm = props => {
                 {textFill[name].button}
               </Button>
             </Segment>
+            {error &&
+              error.response && (
+                <div style={{backgroundColor: 'red'}}>
+                  {' '}
+                  {error.response.data}{' '}
+                </div>
+              )}
           </Form>
           {name === 'signup' ? null : (
             <Message>

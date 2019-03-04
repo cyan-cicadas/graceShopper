@@ -62,12 +62,12 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.put('/:cartid', async (req, res, next) => {
+router.put('/', async (req, res, next) => {
   try {
     const [numberOfAffectedRows, affectedRows] = await CartItem.update(
       req.body,
       {
-        where: {id: req.params.cartid},
+        where: {id: req.body.productId},
         returning: true,
         plain: true
       }
@@ -80,20 +80,20 @@ router.put('/:cartid', async (req, res, next) => {
   }
 })
 
-router.delete('/:cartid', async (req, res, next) => {
-  try {
-    const numAffectedRows = await Cart.destroy({
-      where: {
-        id: req.params.cartid
-      }
-    })
+// router.delete('/:cartid', async (req, res, next) => {
+//   try {
+//     const numAffectedRows = await Cart.destroy({
+//       where: {
+//         id: req.params.cartid
+//       }
+//     })
 
-    res.end(`${numAffectedRows} destroyed`)
-  } catch (error) {
-    console.error(error)
-    next(error)
-  }
-})
+//     res.end(`${numAffectedRows} destroyed`)
+//   } catch (error) {
+//     console.error(error)
+//     next(error)
+//   }
+// })
 
 router.use((req, res, next) => {
   const err = new Error('API route not found!')

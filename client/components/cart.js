@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import axios from 'axios'
 import {MenuItem, Label, Icon, Modal, Table, Button} from 'semantic-ui-react'
-import {getCartTC} from '../store/cart'
+import {getCartTC, delItem} from '../store/cart'
 
 class Cart extends Component {
   state = {open: false}
@@ -15,14 +16,20 @@ class Cart extends Component {
     console.dir(this.props)
   }
 
+  async handleDelete(cartItemId) {
+    await axios.delete(`api/cart/${cartItemId}`)
+    this.props.deleteItem(cartItemId)
+  }
+
   render() {
     const {cart} = this.props
     const {open} = this.state
+    console.dir(this.props)
     let cartQt = 0
     if (cart) {
-      cartQt = cart.reduce((sum, el) => {
-        return (sum += el.quantity)
-      }, 0)
+      // cartQt = cart.reduce((sum, el) => {
+      //   return (sum += el.quantity)
+      // }, 0)
     }
 
     const dummyCart = [
@@ -80,7 +87,7 @@ class Cart extends Component {
                       <Button.Group>
                         <Button color="teal">Edit</Button>
                         <Button.Or />
-                        <Button color="red" icon>
+                        <Button color="red" icon onClick={this.handleDelete}>
                           <Icon name="trash alternate" />
                         </Button>
                       </Button.Group>
@@ -89,7 +96,6 @@ class Cart extends Component {
                   </Table.Row>
                 )
               })}
-
             </Table.Body>
           </Table>
         </Modal.Content>
@@ -119,7 +125,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    fetchCart: userId => dispatch(getCartTC(userId))
+    fetchCart: userId => dispatch(getCartTC(userId)),
+    deleteItem: cartItemId => dispatch(delItem(cartItemId))
   }
 }
 

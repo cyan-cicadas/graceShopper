@@ -2,19 +2,19 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import axios from 'axios'
 import {MenuItem, Label, Icon, Modal, Table, Button} from 'semantic-ui-react'
-import {getCartTC, delItem, addToCart} from '../store/cart'
+import {getCartTC, delItem, addToCart, changeCount} from '../store/cart'
 
 class Cart extends Component {
   state = {open: false}
   open = () => this.setState({open: true})
   close = () => this.setState({open: false})
 
-  async componentDidMount() {
-    const {fetchTC, user, cart} = this.props
+  componentDidMount() {
+    const {fetchCart, user} = this.props
+    console.dir(this.props)
 
     if (user.id) {
-      await fetchTC(user.id)
-      //   console.log('Cart from fetchtc ', cart)
+      fetchCart(user.id)
     }
   }
 
@@ -24,14 +24,22 @@ class Cart extends Component {
     this.props.deleteItem(cartItemId)
   }
 
-  async handleEdit(cartItemId) {
-    //  TODO: configure backend route for the axios call below
-    // await axios.delete(`api/cart/${cartItemId}`)
+  async handleEdit(eventProps) {
+    const {isLoggedIn, chngeCount} = this.props
+    if (isLoggedIn) {
+      //  TODO: configure backend route for the axios call below
+      // await axios.delete(`api/cart/${cartItemId}`)
+    }
+    const {type, qt} = eventProps
+    const payload = {type, qt}
+    chngeCount(payload)
   }
 
   render() {
     const {cart} = this.props
     const {open} = this.state
+
+    // console.dir(this.props)
 
     let cartQt = 0
 
@@ -78,11 +86,26 @@ class Cart extends Component {
 
                     <Table.Cell textAlign="center">
                       <Button.Group>
-                        <Button basic color="red" size="tiny" icon>
+                        <Button
+                          qt={item.quantity}
+                          type="-"
+                          basic
+                          color="red"
+                          size="tiny"
+                          onClick={(e, data) => this.handleEdit(data)}
+                          icon
+                        >
                           <Icon name="minus" />
                         </Button>
                         <Button.Or text={item.quantity} />
-                        <Button basic color="green" size="tiny" icon>
+                        <Button
+                          item={item}
+                          type="+"
+                          basic
+                          color="green"
+                          size="tiny"
+                          icon
+                        >
                           <Icon name="plus" />
                         </Button>
                       </Button.Group>
@@ -125,8 +148,9 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    fetchTC: userId => dispatch(getCartTC(userId)),
-    deleteItem: cartItemId => dispatch(delItem(cartItemId))
+    fetchCart: userId => dispatch(getCartTC(userId)),
+    deleteItem: cartItemId => dispatch(delItem(cartItemId)),
+    chngeCount: payload => dispatch(changeCount(payload))
   }
 }
 

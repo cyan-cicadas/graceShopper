@@ -19,9 +19,11 @@ class ProductList extends Component {
   async addCartHandler(cartItemObject) {
     console.log(cartItemObject)
 
+    let data = {productId: cartItemObject.id, quantity: 1}
+
     try {
       if (this.props.isLoggedIn) {
-        await axios.post('api/cart', cartItemObject.id)
+        await axios.post('api/cart', cartItemObject)
       }
 
       let normalizedData = {quantity: 1, productInfo: cartItemObject}
@@ -89,7 +91,6 @@ class ProductList extends Component {
                         icon="cart"
                         labelPosition="left"
                         onClick={() => {
-                          console.log('add to cart clicked')
                           this.addCartHandler(prod)
                         }}
                       />

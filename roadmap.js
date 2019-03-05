@@ -6,13 +6,13 @@ Reece
 
 functional cart
 
-	- cart for non logged in users
-	
-	- add to cart
+	- send cart to SQL
 
-	- edit cart
+	- render cart from SQL
 	
-	- delete from cart
+	- resolve cart versions btw local & remote
+
+	- edit cart / delete from cart
 	
 
 	- checkout 

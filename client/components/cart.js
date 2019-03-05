@@ -10,8 +10,7 @@ class Cart extends Component {
   close = () => this.setState({open: false})
 
   componentDidMount() {
-    const {fetchCart, user} = this.props
-    // console.log(user.id)
+    const {getCartTC, user} = this.props
 
     if (user.id) {
       fetchCart(user.id)
@@ -32,8 +31,6 @@ class Cart extends Component {
   render() {
     const {cart} = this.props
     const {open} = this.state
-
-    // console.dir(this.props)
 
     let cartQt = 0
 
@@ -127,7 +124,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    fetchCart: userId => dispatch(getCartTC(userId)),
+    getCartTC: userId => dispatch(getCartTC(userId)),
     deleteItem: cartItemId => dispatch(delItem(cartItemId))
   }
 }

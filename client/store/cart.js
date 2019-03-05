@@ -38,13 +38,17 @@ export const addToCart = payload => ({
 // Thunk Creators
 export const getCartTC = userId => async dispatch => {
   try {
-    const res = await axios.get('api/cart/1')
-    // const res = await axios.get(`api/cart/${userId}`)
+    // const res = await axios.get('api/cart/1')
+
+    const res = await axios.get(`api/cart/${userId}`)
+
     dispatch(getCart(res.data))
   } catch (getCartErr) {
     console.error(getCartErr)
   }
 }
+
+function updateCount(array) {}
 
 // Reducer
 export default (state = initialState, action = {}) => {
@@ -52,8 +56,10 @@ export default (state = initialState, action = {}) => {
     case GET_CART:
       // object into array
       return action.payload
+
     case DELETE_ROW:
       return cart.filter(item => item.id !== action.payload)
+
     case CHANGE_COUNT:
       const {id, type} = action.payload
       const newState = [...state]
@@ -63,7 +69,12 @@ export default (state = initialState, action = {}) => {
         }
         return item
       })
-    // case ADD_TO_CART:
+
+    case ADD_TO_CART: {
+      const newState = [...state, action.payload]
+
+      return newState
+    }
 
     default:
       return state

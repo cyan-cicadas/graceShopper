@@ -42,6 +42,8 @@ export const getCartTC = userId => async dispatch => {
 
     const res = await axios.get(`api/cart/${userId}`)
 
+    console.log(res)
+
     dispatch(getCart(res.data))
   } catch (getCartErr) {
     console.error(getCartErr)
@@ -54,7 +56,6 @@ function updateCount(array) {}
 export default (state = initialState, action = {}) => {
   switch (action.type) {
     case GET_CART:
-      // object into array
       return action.payload
 
     case DELETE_ROW:

@@ -25,7 +25,6 @@ const LoginForm = props => {
       button: 'Login'
     }
   }
-  console.log(name)
 
   return (
     <div className="login-form">

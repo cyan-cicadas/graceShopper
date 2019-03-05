@@ -30,6 +30,8 @@ router.get('/:consumerid', async (req, res, next) => {
       }
     )
 
+    cart.orderId = currentOrder[0].id
+
     let count = 0
 
     for (let item of cart) {
@@ -37,7 +39,7 @@ router.get('/:consumerid', async (req, res, next) => {
       cart[count].dataValues.productInfo = thisItem
       count++
     }
-    // console.log(cart[0].productInfo.name)
+
     res.json(cart)
     res.end()
   } catch (error) {
@@ -47,6 +49,7 @@ router.get('/:consumerid', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
+  console.log(req.body)
   try {
     const [instance, wasCreated] = await CartItem.findOrCreate({
       where: req.body
@@ -56,7 +59,7 @@ router.post('/', async (req, res, next) => {
 
     res.end()
   } catch (error) {
-    console.error(error)
+    // console.error(error)
     next(error)
   }
 })

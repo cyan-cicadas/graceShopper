@@ -32,9 +32,11 @@ const Navbar = ({handleClick, isLoggedIn, user}) => {
             <Menu.Item position="left">{`Welcome, ${
               user.firstName
             }`}</Menu.Item>
+
             <Menu.Item position="right">
-              <Cart />
+              <Cart isLoggedIn={isLoggedIn} />
             </Menu.Item>
+
             <Menu.Item position="right">
               <Button onClick={handleClick}>Logout</Button>
             </Menu.Item>
@@ -44,6 +46,11 @@ const Navbar = ({handleClick, isLoggedIn, user}) => {
             <Link to="/home">
               <Menu.Item>Home</Menu.Item>
             </Link>
+
+            <Menu.Item position="right">
+              <Cart isLoggedIn={isLoggedIn} />
+            </Menu.Item>
+
             <Menu.Item position="right">
               <Link to="/login">Login</Link>
             </Menu.Item>
@@ -85,10 +92,10 @@ export default connect(mapState, mapDispatch)(Navbar)
 /**
  * PROP TYPES
  */
-Navbar.propTypes = {
-  handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
-}
+// Navbar.propTypes = {
+//   handleClick: PropTypes.func.isRequired,
+//   isLoggedIn: PropTypes.bool.isRequired
+// }
 
 //   <div>
 //   <h1>BOILERMAKER</h1>

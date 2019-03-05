@@ -158,10 +158,10 @@ export const Signup = connect(mapSignup, mapDispatch)(LoginForm)
 
 /**
  * PROP TYPES
- */
-LoginForm.propTypes = {
-  name: PropTypes.string.isRequired,
-  displayName: PropTypes.string.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  error: PropTypes.object
-}
+ //  */
+// LoginForm.propTypes = {
+//   name: PropTypes.string.isRequired,
+//   displayName: PropTypes.string.isRequired,
+//   handleSubmit: PropTypes.func.isRequired,
+//   error: PropTypes.object
+// }

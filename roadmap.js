@@ -1,5 +1,48 @@
 /*
 
+Reece
+	- admin
+	- debug string verification regex
+
+functional cart
+
+	- cart for non logged in users
+	
+	- add to cart
+
+	- edit cart
+	
+	- delete from cart
+	
+
+	- checkout 
+	- React Toast Notification
+	- eliminate logging middleware
+
+DONE graph ql style product info loading
+	- load all product info with cart get route
+
+
+DONE cart editing routes- cart put route to edit data in current cart
+	- put route to update quantity
+	= put route to delete the item
+
+
+add to cart- create or find and create
+
+render products
+
+update and remove
+
+checkout- stripe - kill the order and create an empty one 
+	if logic in update- 
+	when i click checkout, the hwole thing goes away
+
+fakename@gmail.com
+abcD1234
+
+
+
 
 TIER 1: MVP SHOPPING EXPERIENCE
 

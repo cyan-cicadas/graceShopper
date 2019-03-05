@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import axios from 'axios'
 import {MenuItem, Label, Icon, Modal, Table, Button} from 'semantic-ui-react'
-import {getCartTC, delItem} from '../store/cart'
+import {getCartTC, delItem, addToCart} from '../store/cart'
 
 class Cart extends Component {
   state = {open: false}
@@ -11,9 +11,11 @@ class Cart extends Component {
 
   componentDidMount() {
     const {fetchCart, user} = this.props
-    console.log(user.id)
-    fetchCart(user.id)
-    console.dir(this.props)
+    // console.log(user.id)
+
+    if (user.id) {
+      fetchCart(user.id)
+    }
   }
 
   async handleDelete(cartItemId) {
@@ -30,34 +32,16 @@ class Cart extends Component {
   render() {
     const {cart} = this.props
     const {open} = this.state
-    console.dir(this.props)
+
+    // console.dir(this.props)
+
     let cartQt = 0
+
     if (cart) {
       cartQt = cart.reduce((sum, el) => {
         return (sum += el.quantity)
       }, 0)
     }
-
-    const dummyCart = [
-      {
-        id: 1,
-        qt: 3,
-        name: 'Bone-In Porterhouse, 14 oz',
-        price: 18.99
-      },
-      {
-        id: 2,
-        qt: 2,
-        name: 'Tomahawk Ribeye, 24 oz',
-        price: 48.99
-      },
-      {
-        id: 3,
-        qt: 1,
-        name: 'Checken Liver, 12 oz.',
-        price: 9.99
-      }
-    ]
 
     return (
       <Modal
@@ -83,15 +67,17 @@ class Cart extends Component {
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {cart.map(item => {
+              {cart.map((item, i) => {
                 return (
-                  <Table.Row key={item.id}>
+                  <Table.Row key={i}>
                     <Table.Cell>{item.productInfo.name}</Table.Cell>
                     <Table.Cell>{`$${
                       item.productInfo.price_per_pound
                     }`}</Table.Cell>
+
                     <Table.Cell>{`$${item.productInfo.price_per_pound *
                       item.quantity}`}</Table.Cell>
+
                     <Table.Cell textAlign="center">
                       <Button.Group>
                         <Button basic color="red" size="tiny" icon>
@@ -103,6 +89,7 @@ class Cart extends Component {
                         </Button>
                       </Button.Group>
                     </Table.Cell>
+
                     <Table.Cell textAlign="center">
                       <Button negative icon onClick={this.handleDelete}>
                         <Icon name="trash alternate" />

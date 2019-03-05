@@ -61,12 +61,25 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+/*
+
+thunk will call:
+
+axios.put('/api/cart', { productid : productId, consumerId: consumerId, quantity: quantity })
+
+the route is expecting an object with the above keys
+
+*/
+
 router.put('/', async (req, res, next) => {
   try {
     const [numberOfAffectedRows, affectedRows] = await CartItem.update(
-      req.body,
+      req.body.quantity,
       {
-        where: {id: req.body.productId},
+        where: {
+          productid: req.body.productId,
+          consumerId: req.body.consumerId
+        },
         returning: true,
         plain: true
       }

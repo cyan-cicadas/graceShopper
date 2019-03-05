@@ -17,8 +17,14 @@ class Cart extends Component {
   }
 
   async handleDelete(cartItemId) {
-    await axios.delete(`api/cart/${cartItemId}`)
+    //  TODO: configure backend route for the axios call below
+    // await axios.delete(`api/cart/${cartItemId}`)
     this.props.deleteItem(cartItemId)
+  }
+
+  async handleEdit(cartItemId) {
+    //  TODO: configure backend route for the axios call below
+    // await axios.delete(`api/cart/${cartItemId}`)
   }
 
   render() {
@@ -27,9 +33,9 @@ class Cart extends Component {
     console.dir(this.props)
     let cartQt = 0
     if (cart) {
-      // cartQt = cart.reduce((sum, el) => {
-      //   return (sum += el.quantity)
-      // }, 0)
+      cartQt = cart.reduce((sum, el) => {
+        return (sum += el.quantity)
+      }, 0)
     }
 
     const dummyCart = [
@@ -52,6 +58,7 @@ class Cart extends Component {
         price: 9.99
       }
     ]
+
     return (
       <Modal
         open={open}
@@ -65,36 +72,41 @@ class Cart extends Component {
       >
         <Modal.Header>Your Cart</Modal.Header>
         <Modal.Content>
-          <Table celled basic="very" color="teal">
+          <Table celled basic="very">
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell>Qt</Table.HeaderCell>
                 <Table.HeaderCell>Product</Table.HeaderCell>
                 <Table.HeaderCell>Price/Each</Table.HeaderCell>
                 <Table.HeaderCell>Price Total</Table.HeaderCell>
-                <Table.HeaderCell>Edit/Delete</Table.HeaderCell>
+                <Table.HeaderCell textAlign="center">Qt</Table.HeaderCell>
+                <Table.HeaderCell textAlign="center">Remove</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>
               {cart.map(item => {
                 return (
                   <Table.Row key={item.id}>
-                    <Table.Cell>{item.quantity}</Table.Cell>
                     <Table.Cell>{item.productInfo.name}</Table.Cell>
                     <Table.Cell>{`$${
                       item.productInfo.price_per_pound
                     }`}</Table.Cell>
                     <Table.Cell>{`$${item.productInfo.price_per_pound *
                       item.quantity}`}</Table.Cell>
-                    <Table.Cell>
+                    <Table.Cell textAlign="center">
                       <Button.Group>
-                        <Button color="teal">Edit</Button>
-                        <Button.Or />
-                        <Button color="red" icon onClick={this.handleDelete}>
-                          <Icon name="trash alternate" />
+                        <Button basic color="red" size="tiny" icon>
+                          <Icon name="minus" />
+                        </Button>
+                        <Button.Or text={item.quantity} />
+                        <Button basic color="green" size="tiny" icon>
+                          <Icon name="plus" />
                         </Button>
                       </Button.Group>
-                      )
+                    </Table.Cell>
+                    <Table.Cell textAlign="center">
+                      <Button negative icon onClick={this.handleDelete}>
+                        <Icon name="trash alternate" />
+                      </Button>
                     </Table.Cell>
                   </Table.Row>
                 )

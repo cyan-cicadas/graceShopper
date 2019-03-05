@@ -37,7 +37,7 @@ router.get('/:consumerid', async (req, res, next) => {
       cart[count].dataValues.productInfo = thisItem
       count++
     }
-
+    // console.log(cart[0].productInfo.name)
     res.json(cart)
     res.end()
   } catch (error) {

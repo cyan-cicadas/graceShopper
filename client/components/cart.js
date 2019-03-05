@@ -9,11 +9,12 @@ class Cart extends Component {
   open = () => this.setState({open: true})
   close = () => this.setState({open: false})
 
-  componentDidMount() {
-    const {getCartTC, user} = this.props
+  async componentDidMount() {
+    const {fetchTC, user, cart} = this.props
 
     if (user.id) {
-      fetchCart(user.id)
+      await fetchTC(user.id)
+      //   console.log('Cart from fetchtc ', cart)
     }
   }
 
@@ -124,7 +125,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    getCartTC: userId => dispatch(getCartTC(userId)),
+    fetchTC: userId => dispatch(getCartTC(userId)),
     deleteItem: cartItemId => dispatch(delItem(cartItemId))
   }
 }

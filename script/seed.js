@@ -14,7 +14,7 @@ async function seed() {
       firstName: 'T Bone',
       lastName: 'Burnette',
       email: 't_bone@email.com',
-      password: '12345'
+      password: 'Ab123456'
     }),
 
     Consumer.create({

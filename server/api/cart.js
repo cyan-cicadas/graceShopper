@@ -30,7 +30,7 @@ router.get('/:consumerid', async (req, res, next) => {
       }
     )
 
-    cart.orderId = currentOrder[0].id
+    cart[0].dataValues.orderId = currentOrder[0].id
 
     let count = 0
 

@@ -19,11 +19,15 @@ class ProductList extends Component {
   async addCartHandler(cartItemObject) {
     console.log(cartItemObject)
 
-    let data = {productId: cartItemObject.id, quantity: 1}
+    let data = {
+      productId: cartItemObject.id,
+      quantity: 1,
+      orderId: this.props.cart.orderId
+    }
 
     try {
       if (this.props.isLoggedIn) {
-        await axios.post('api/cart', cartItemObject)
+        await axios.post('api/cart', data)
       }
 
       let normalizedData = {quantity: 1, productInfo: cartItemObject}

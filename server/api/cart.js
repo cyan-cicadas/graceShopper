@@ -72,7 +72,7 @@ the route is expecting an object with the above keys
 */
 
 router.put('/', async (req, res, next) => {
-  console.log(req.body)
+  // console.log(req.body)
 
   if (req.body.quantity === 0) {
     try {
@@ -113,24 +113,25 @@ router.put('/', async (req, res, next) => {
 })
 
 router.put('/checkout', async (req, res, next) => {
-  console.log(req.body)
+  // console.log(req.body)
 
   try {
-    const [numberOfAffectedRows, affectedRows] = await CartItem.update(
+    const [numberOfAffectedRows, affectedRows] = await Order.update(
       {
         completed: true
       },
       {
         where: {
-          productId: req.body.productId,
-          orderId: req.body.orderId
+          id: req.body.orderId
         },
         returning: true,
         plain: true
       }
     )
 
-    // res.json(affectedRows.dataValues)
+    // console.log(affectedRows.dataValues)
+
+    // res.json()
     res.end()
   } catch (error) {
     next(error)

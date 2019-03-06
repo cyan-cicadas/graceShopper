@@ -22,12 +22,15 @@ const addCart = id => ({
   type: ADD_CART,
   id
 })
-/**
+
+/*
  * THUNK CREATORS
- */
+*/
+
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
+
     dispatch(getUser(res.data || defaultUser))
   } catch (err) {
     console.error(err)
@@ -78,7 +81,7 @@ export const logout = () => async dispatch => {
   try {
     await axios.post('/auth/logout')
     dispatch(removeUser())
-    history.push('/login')
+    history.push('/home')
   } catch (err) {
     console.error(err)
   }
@@ -91,8 +94,10 @@ export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
       return action.user
+
     case REMOVE_USER:
       return defaultUser
+
     default:
       return state
   }

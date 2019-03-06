@@ -30,8 +30,6 @@ router.get('/:consumerid', async (req, res, next) => {
       }
     )
 
-    cart[0].dataValues.orderId = currentOrder[0].id
-
     let count = 0
 
     for (let item of cart) {
@@ -49,7 +47,6 @@ router.get('/:consumerid', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
-  console.log(req.body)
   try {
     const [instance, wasCreated] = await CartItem.findOrCreate({
       where: req.body

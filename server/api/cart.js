@@ -72,7 +72,6 @@ the route is expecting an object with the above keys
 */
 
 router.put('/', async (req, res, next) => {
-  // console.log(req.body)
 
   if (req.body.quantity === 0) {
     try {
@@ -113,6 +112,7 @@ router.put('/', async (req, res, next) => {
 })
 
 router.put('/checkout', async (req, res, next) => {
+
   // console.log(req.body)
 
   try {
@@ -129,9 +129,6 @@ router.put('/checkout', async (req, res, next) => {
       }
     )
 
-    // console.log(affectedRows.dataValues)
-
-    // res.json()
     res.end()
   } catch (error) {
     next(error)

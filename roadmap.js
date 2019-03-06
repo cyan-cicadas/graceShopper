@@ -2,8 +2,6 @@
 
 fakename2@gmail.com
 
-Ab123456
-
 Reece
 	- admin
 	- debug string verification regex

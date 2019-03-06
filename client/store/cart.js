@@ -6,6 +6,7 @@ import cart from '../components/cart'
 import store from './index'
 import {addCart} from './user'
 
+
 // Middlewares
 const middlewares = applyMiddleware(loggerMiddleware, thunkMiddleware)
 
@@ -72,6 +73,7 @@ export const checkoutThunk = (orderId, userId) => async dispatch => {
 
     dispatch(clearCart())
 
+
     // dispatch(getCart(res.data))
   } catch (getCartErr) {
     console.error(getCartErr)
@@ -85,8 +87,7 @@ export default (state = initialState, action = {}) => {
       return action.payload
 
     case DELETE_ROW: {
-      // console.log('delete row payload: ', action.payload)
-
+      
       return [...state].filter(item => item.productInfo.id !== action.payload)
     }
 

@@ -2,13 +2,14 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import axios from 'axios'
 import {MenuItem, Label, Icon, Modal, Table, Button} from 'semantic-ui-react'
-import {getCartTC, delItem, addToCart, changeCount} from '../store/cart'
+import {getCartTC, deleteRow, addToCart, changeCount} from '../store/cart'
 
 class Cart extends Component {
   constructor() {
     super()
 
     this.handleEdit = this.handleEdit.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
   }
   state = {open: false}
   open = () => this.setState({open: true})
@@ -29,12 +30,22 @@ class Cart extends Component {
     this.props.deleteItem(cartItemId)
   }
 
-  async handleEdit(cartItemId, direction) {
+  async handleEdit(cartItemId, quant, direction) {
     //  TODO: configure backend route for the axios call below
     // await axios.delete(`api/cart/${cartItemId}`)
-    console.log('handleEdit', {id: cartItemId, type: direction})
+    console.log('handleEdit', quant, {id: cartItemId, type: direction})
+
+    direction === '+' ? quant++ : quant--
+
+    console.log('new quant', quant)
+
     const payload = {id: cartItemId, type: direction}
-    this.props.updateItem(payload)
+    if (quant > 0) {
+      this.props.updateItem(payload)
+    }
+    if (quant === 0) {
+      // call delete route
+    }
   }
 
   render() {
@@ -90,7 +101,11 @@ class Cart extends Component {
                           <Icon
                             name="minus"
                             onClick={() =>
-                              this.handleEdit(item.productInfo.id, '-')
+                              this.handleEdit(
+                                item.productInfo.id,
+                                item.quantity,
+                                '-'
+                              )
                             }
                           />
                         </Button>
@@ -101,7 +116,11 @@ class Cart extends Component {
                           <Icon
                             name="plus"
                             onClick={() =>
-                              this.handleEdit(item.productInfo.id, '+')
+                              this.handleEdit(
+                                item.productInfo.id,
+                                item.quantity,
+                                '+'
+                              )
                             }
                           />
                         </Button>
@@ -109,7 +128,11 @@ class Cart extends Component {
                     </Table.Cell>
 
                     <Table.Cell textAlign="center">
-                      <Button negative icon onClick={this.handleDelete}>
+                      <Button
+                        negative
+                        icon
+                        onClick={() => this.handleDelete(item.productInfo.id)}
+                      >
                         <Icon name="trash alternate" />
                       </Button>
                     </Table.Cell>
@@ -147,7 +170,7 @@ const mapDispatch = dispatch => {
   return {
     fetchTC: userId => dispatch(getCartTC(userId)),
     updateItem: payload => dispatch(changeCount(payload)),
-    deleteItem: cartItemId => dispatch(delItem(cartItemId))
+    deleteItem: cartItemId => dispatch(deleteRow(cartItemId))
   }
 }
 

@@ -68,27 +68,30 @@ export default (state = initialState, action = {}) => {
     case GET_CART:
       return action.payload
 
-    case DELETE_ROW:
-      return cart.filter(item => item.id !== action.payload)
+    case DELETE_ROW: {
+      console.log('delete row payload: ', action.payload)
 
-    case CHANGE_COUNT:
+      return [...state].filter(item => item.productInfo.id !== action.payload)
+    }
+
+    case CHANGE_COUNT: {
       const {id, type} = action.payload
       const newState = [...state]
 
       return newState.map(item => {
-        console.log('id: ', id, 'item :', item.productInfo.id)
         if (item.productInfo.id === id && item.quantity > 0) {
-          console.log('hitting: ', item)
+          // console.log('hitting: ', item)
           type === '+' ? item.quantity++ : item.quantity--
         }
 
         if (item.quantity === 0) {
-          console.log(item.quantity)
+          // console.log(item.quantity)
           // store.dispatch(deleteRow(id))
         }
 
         return item
       })
+    }
 
     case ADD_TO_CART: {
       const newState = [...state, action.payload]

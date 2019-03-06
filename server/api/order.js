@@ -39,6 +39,8 @@ router.post('/', async (req, res, next) => {
       consumerId: req.body.id
     })
 
+    // console.log(newOrder)
+
     res.json(newOrder)
 
     res.end()

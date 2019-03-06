@@ -18,7 +18,8 @@ const defaultUser = {}
  */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
-const addCart = id => ({
+
+export const addCart = id => ({
   type: ADD_CART,
   id
 })
@@ -64,7 +65,9 @@ export const auth = (
     console.error(dispatchOrHistoryErr)
   }
   try {
-    await axios.post('/api/order', {id: data.id})
+    if (method === 'signup') {
+      await axios.post('/api/order', {id: data.id})
+    }
   } catch (createCartErr) {
     console.error(createCartErr)
   }
@@ -97,6 +100,10 @@ export default function(state = defaultUser, action) {
 
     case REMOVE_USER:
       return defaultUser
+
+    case ADD_CART: {
+      return {...state, orderId: action.id}
+    }
 
     default:
       return state

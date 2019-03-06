@@ -7,7 +7,8 @@ import {
   deleteRow,
   addToCart,
   changeCount,
-  updateCart
+  updateCart,
+  checkoutThunk
 } from '../store/cart'
 
 class Cart extends Component {
@@ -16,6 +17,7 @@ class Cart extends Component {
 
     this.handleEdit = this.handleEdit.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
+    this.checkoutHandle = this.checkoutHandle.bind(this)
   }
   state = {open: false}
   open = () => this.setState({open: true})
@@ -77,6 +79,19 @@ class Cart extends Component {
       if (this.props.isLoggedIn) {
         this.props.thunkUpdate(thunkLoad)
       }
+    }
+  }
+
+  async checkoutHandle() {
+    console.log(
+      'checkoutHandle hitting',
+      this.props.user.orderId,
+      this.props.user.id
+    )
+
+    // orderId: req.body.orderId
+    if (this.props.user.id) {
+      this.props.checkout(this.props.user.orderId, this.props.user.id)
     }
   }
 
@@ -183,7 +198,10 @@ class Cart extends Component {
             icon="checkmark"
             labelPosition="right"
             content="Checkout"
-            onClick={this.close}
+            onClick={() => {
+              this.close()
+              this.checkoutHandle()
+            }}
           />
         </Modal.Actions>
       </Modal>
@@ -204,7 +222,8 @@ const mapDispatch = dispatch => {
     fetchTC: userId => dispatch(getCartTC(userId)),
     updateItem: payload => dispatch(changeCount(payload)),
     deleteItem: cartItemId => dispatch(deleteRow(cartItemId)),
-    thunkUpdate: payload => dispatch(updateCart(payload))
+    thunkUpdate: payload => dispatch(updateCart(payload)),
+    checkout: (orderId, userId) => dispatch(checkoutThunk(orderId, userId))
   }
 }
 

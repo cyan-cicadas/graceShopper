@@ -4,6 +4,8 @@ import loggerMiddleware from 'redux-logger'
 import axios from 'axios'
 import cart from '../components/cart'
 import store from './index'
+import {addCart} from './user'
+
 
 // Middlewares
 const middlewares = applyMiddleware(loggerMiddleware, thunkMiddleware)
@@ -62,9 +64,15 @@ export const updateCart = payload => async dispatch => {
   }
 }
 
-export const checkoutThunk = payload => async dispatch => {
+export const checkoutThunk = (orderId, userId) => async dispatch => {
   try {
-    const res = await axios.put(`api/cart/checkout`, payload)
+    const res = await axios.put(`api/cart/checkout`, {orderId: orderId})
+    const newOrder = await axios.post('/api/order', {id: userId})
+
+    await dispatch(addCart(newOrder.data.id))
+
+    dispatch(clearCart())
+
 
     // dispatch(getCart(res.data))
   } catch (getCartErr) {
@@ -79,8 +87,7 @@ export default (state = initialState, action = {}) => {
       return action.payload
 
     case DELETE_ROW: {
-      console.log('delete row payload: ', action.payload)
-
+      
       return [...state].filter(item => item.productInfo.id !== action.payload)
     }
 

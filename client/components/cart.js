@@ -2,9 +2,21 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import axios from 'axios'
 import {MenuItem, Label, Icon, Modal, Table, Button} from 'semantic-ui-react'
-import {getCartTC, delItem, addToCart} from '../store/cart'
+import {
+  getCartTC,
+  deleteRow,
+  addToCart,
+  changeCount,
+  updateCart
+} from '../store/cart'
 
 class Cart extends Component {
+  constructor() {
+    super()
+
+    this.handleEdit = this.handleEdit.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
+  }
   state = {open: false}
   open = () => this.setState({open: true})
   close = () => this.setState({open: false})
@@ -14,7 +26,6 @@ class Cart extends Component {
 
     if (user.id) {
       await fetchTC(user.id)
-      //   console.log('Cart from fetchtc ', cart)
     }
   }
 
@@ -22,11 +33,51 @@ class Cart extends Component {
     //  TODO: configure backend route for the axios call below
     // await axios.delete(`api/cart/${cartItemId}`)
     this.props.deleteItem(cartItemId)
+
+    if (this.props.isLoggedIn) {
+      const thunkLoad = {
+        productId: cartItemId,
+        orderId: this.props.user.orderId,
+        quantity: 0
+      }
+
+      this.props.thunkUpdate(thunkLoad)
+    }
   }
 
-  async handleEdit(cartItemId) {
+  async handleEdit(cartItemId, quant, direction) {
     //  TODO: configure backend route for the axios call below
     // await axios.delete(`api/cart/${cartItemId}`)
+    console.log('handleEdit', quant, {id: cartItemId, type: direction})
+
+    direction === '+' ? quant++ : quant--
+
+    console.log('new quant', quant)
+
+    const payload = {id: cartItemId, type: direction}
+
+    const thunkLoad = {
+      productId: cartItemId,
+      orderId: this.props.user.orderId,
+      quantity: quant
+    }
+
+    if (quant > 0) {
+      this.props.updateItem(payload)
+
+      if (this.props.isLoggedIn) {
+        this.props.thunkUpdate(thunkLoad)
+      }
+    }
+
+    if (quant === 0) {
+      // call delete route
+      this.props.deleteItem(cartItemId)
+
+      if (this.props.isLoggedIn) {
+        this.props.thunkUpdate(thunkLoad)
+      }
+    }
   }
 
   render() {
@@ -79,17 +130,41 @@ class Cart extends Component {
                     <Table.Cell textAlign="center">
                       <Button.Group>
                         <Button basic color="red" size="tiny" icon>
-                          <Icon name="minus" />
+                          <Icon
+                            name="minus"
+                            onClick={() =>
+                              this.handleEdit(
+                                item.productInfo.id,
+                                item.quantity,
+                                '-'
+                              )
+                            }
+                          />
                         </Button>
+
                         <Button.Or text={item.quantity} />
+
                         <Button basic color="green" size="tiny" icon>
-                          <Icon name="plus" />
+                          <Icon
+                            name="plus"
+                            onClick={() =>
+                              this.handleEdit(
+                                item.productInfo.id,
+                                item.quantity,
+                                '+'
+                              )
+                            }
+                          />
                         </Button>
                       </Button.Group>
                     </Table.Cell>
 
                     <Table.Cell textAlign="center">
-                      <Button negative icon onClick={this.handleDelete}>
+                      <Button
+                        negative
+                        icon
+                        onClick={() => this.handleDelete(item.productInfo.id)}
+                      >
                         <Icon name="trash alternate" />
                       </Button>
                     </Table.Cell>
@@ -119,14 +194,17 @@ class Cart extends Component {
 const mapState = state => {
   return {
     user: state.userReducer,
-    cart: state.cartReducer
+    cart: state.cartReducer,
+    isLoggedIn: !!state.userReducer.id
   }
 }
 
 const mapDispatch = dispatch => {
   return {
     fetchTC: userId => dispatch(getCartTC(userId)),
-    deleteItem: cartItemId => dispatch(delItem(cartItemId))
+    updateItem: payload => dispatch(changeCount(payload)),
+    deleteItem: cartItemId => dispatch(deleteRow(cartItemId)),
+    thunkUpdate: payload => dispatch(updateCart(payload))
   }
 }
 

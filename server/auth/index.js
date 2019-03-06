@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const User = require('../db/models/user')
 const Consumer = require('../db/models/consumer')
+const Order = require('../db/models/order')
 module.exports = router
 
 // full URL path is /auth
@@ -19,7 +20,20 @@ router.post('/login', async (req, res, next) => {
     //   return
     // }
 
-    const consumer = await Consumer.findOne({where: {email: req.body.email}})
+    const consumer = await Consumer.findOne({
+      where: {
+        email: req.body.email
+      }
+    })
+
+    const currentOrder = await Order.findAll({
+      where: {
+        consumerId: consumer.id,
+        completed: false
+      }
+    })
+
+    consumer.dataValues.orderId = currentOrder[0].id
 
     if (!consumer) {
       console.log('No such user found:', req.body.email)
@@ -53,6 +67,7 @@ router.post('/signup', async (req, res, next) => {
 
     //   res.status(401).send('Fields Cannot Contain Special Characters')
     // } else {
+
     const newUser = {
       email: req.body.email,
       password: req.body.password,
@@ -63,7 +78,6 @@ router.post('/signup', async (req, res, next) => {
     const consumer = await Consumer.create(req.body)
 
     req.login(consumer, err => (err ? next(err) : res.json(consumer)))
-    // }
   } catch (err) {
     if (err.name === 'SequelizeUniqueConstraintError') {
       res.status(401).send('User already exists')

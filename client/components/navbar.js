@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import {clearCart} from '../store/cart'
 import {Segment, Menu, Container, Image, Button} from 'semantic-ui-react'
 import Cart from './cart'
 
@@ -17,7 +18,7 @@ const Navbar = ({handleClick, isLoggedIn, user}) => {
       />
       <Menu
         fixed="top"
-        inverted="true"
+        inverted={true}
         // pointing={!fixed}
         // secondary={!fixed}
         size="large"
@@ -83,6 +84,7 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout())
+      dispatch(clearCart())
     }
   }
 }

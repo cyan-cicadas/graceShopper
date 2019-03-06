@@ -30,8 +30,6 @@ router.get('/:consumerid', async (req, res, next) => {
       }
     )
 
-    cart[0].dataValues.orderId = currentOrder[0].id
-
     let count = 0
 
     for (let item of cart) {
@@ -49,7 +47,6 @@ router.get('/:consumerid', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
-  console.log(req.body)
   try {
     const [instance, wasCreated] = await CartItem.findOrCreate({
       where: req.body
@@ -75,20 +72,65 @@ the route is expecting an object with the above keys
 */
 
 router.put('/', async (req, res, next) => {
+  console.log(req.body)
+
+  if (req.body.quantity === 0) {
+    try {
+      const numAffectedRows = await CartItem.destroy({
+        where: {
+          productId: req.body.productId,
+          orderId: req.body.orderId
+        }
+      })
+
+      res.end(`${numAffectedRows} destroyed`)
+    } catch (error) {
+      console.error(error)
+      next(error)
+    }
+  } else {
+    try {
+      const [numberOfAffectedRows, affectedRows] = await CartItem.update(
+        {
+          quantity: req.body.quantity
+        },
+        {
+          where: {
+            productId: req.body.productId,
+            orderId: req.body.orderId
+          },
+          returning: true,
+          plain: true
+        }
+      )
+
+      // res.json(affectedRows.dataValues)
+      res.end()
+    } catch (error) {
+      next(error)
+    }
+  }
+})
+
+router.put('/checkout', async (req, res, next) => {
+  console.log(req.body)
+
   try {
     const [numberOfAffectedRows, affectedRows] = await CartItem.update(
-      req.body.quantity,
+      {
+        completed: true
+      },
       {
         where: {
-          productid: req.body.productId,
-          consumerId: req.body.consumerId
+          productId: req.body.productId,
+          orderId: req.body.orderId
         },
         returning: true,
         plain: true
       }
     )
 
-    res.json(affectedRows.dataValues)
+    // res.json(affectedRows.dataValues)
     res.end()
   } catch (error) {
     next(error)

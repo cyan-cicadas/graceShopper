@@ -17,20 +17,21 @@ class ProductList extends Component {
   }
 
   async addCartHandler(cartItemObject) {
-    console.log(cartItemObject)
-
-    let data = {
-      productId: cartItemObject.id,
-      quantity: 1,
-      orderId: this.props.cart.orderId
-    }
-
     try {
       if (this.props.isLoggedIn) {
+        let data = {
+          productId: cartItemObject.id,
+          quantity: 1,
+          orderId: this.props.user.orderId
+        }
+
         await axios.post('api/cart', data)
       }
 
-      let normalizedData = {quantity: 1, productInfo: cartItemObject}
+      let normalizedData = {
+        quantity: 1,
+        productInfo: cartItemObject
+      }
 
       this.props.addToCart(normalizedData)
     } catch (err) {
@@ -84,7 +85,7 @@ class ProductList extends Component {
                         trigger={
                           <Button color="green" icon="cart" content="In Cart" />
                         }
-                        content="This item is in your cart"
+                        content="This item is in your cart. Please click on the cart!"
                         on="click"
                         hideOnScroll
                       />

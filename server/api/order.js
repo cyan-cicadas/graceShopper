@@ -15,6 +15,24 @@ sign up or checkout
 
 */
 
+router.get('/:id', async (req, res, next) => {
+  try {
+    const thisOrder = await Order.findAll({
+      where: {
+        consumerId: req.params.id,
+        completed: false
+      }
+    })
+
+    res.json(thisOrder[0])
+
+    res.end()
+  } catch (error) {
+    console.error(error)
+    next(error)
+  }
+})
+
 router.post('/', async (req, res, next) => {
   try {
     const newOrder = await Order.create({

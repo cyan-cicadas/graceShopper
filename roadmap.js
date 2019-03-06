@@ -1,20 +1,18 @@
 /*
 
+fakename2@gmail.com
+abcD1234
+
 Reece
 	- admin
 	- debug string verification regex
 
 functional cart
 
-	- send cart to SQL
-
-	- render cart from SQL
-	
 	- resolve cart versions btw local & remote
 
 	- edit cart / delete from cart
 	
-
 	- checkout 
 	- React Toast Notification
 	- eliminate logging middleware
@@ -37,10 +35,6 @@ update and remove
 checkout- stripe - kill the order and create an empty one 
 	if logic in update- 
 	when i click checkout, the hwole thing goes away
-
-fakename@gmail.com
-abcD1234
-
 
 
 
@@ -79,11 +73,7 @@ agenda
 				- cart
 
 	(front end) 
-	- HTML/CSS layout- wireframe
-	- view by farms
-	- view by product
-	- view user page
-	- add products to cart
+
 	- buy items
 	- spiel about farm direct  
 	- seed data with photos for front end

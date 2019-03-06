@@ -62,13 +62,17 @@ export default (state = initialState, action = {}) => {
       return cart.filter(item => item.id !== action.payload)
 
     case CHANGE_COUNT:
-      const {id, type} = action.payload
+      const {prodid, type} = action.payload
+      console.dir(state)
       const newState = [...state]
-      return newState.map(item => {
-        if (item.id === id && item.quantity > 0) {
-          type === '+' ? item.quantity++ : item.quantity--
+      // return state
+      return newState.map(el => {
+        const {productInfo: item} = el
+        // console.log(item)
+        if (item.id === prodid && el.quantity > 0) {
+          type === '+' ? el.quantity++ : el.quantity--
         }
-        return item
+        return el
       })
 
     case ADD_TO_CART: {

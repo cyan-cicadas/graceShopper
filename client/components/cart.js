@@ -30,8 +30,9 @@ class Cart extends Component {
       //  TODO: configure backend route for the axios call below
       // await axios.delete(`api/cart/${cartItemId}`)
     }
-    const {type, qt} = eventProps
-    const payload = {type, qt}
+    const {type, prodid} = eventProps
+    const payload = {type, prodid}
+    console.log(prodid)
     chngeCount(payload)
   }
 
@@ -87,7 +88,7 @@ class Cart extends Component {
                     <Table.Cell textAlign="center">
                       <Button.Group>
                         <Button
-                          qt={item.quantity}
+                          prodid={item.productInfo.id}
                           type="-"
                           basic
                           color="red"
@@ -99,11 +100,12 @@ class Cart extends Component {
                         </Button>
                         <Button.Or text={item.quantity} />
                         <Button
-                          item={item}
+                          prodid={item.productInfo.id}
                           type="+"
                           basic
                           color="green"
                           size="tiny"
+                          onClick={(e, data) => this.handleEdit(data)}
                           icon
                         >
                           <Icon name="plus" />

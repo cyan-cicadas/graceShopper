@@ -52,11 +52,21 @@ export const getCartTC = userId => async dispatch => {
   }
 }
 
-export const updateCart = (userId, prodId, direction) => async dispatch => {
+export const updateCart = payload => async dispatch => {
   try {
-    const res = await axios.put(`api/cart/${userId}`)
+    const res = await axios.put(`api/cart/`, payload)
 
-    dispatch(getCart(res.data))
+    // dispatch(getCart(res.data))
+  } catch (getCartErr) {
+    console.error(getCartErr)
+  }
+}
+
+export const checkoutThunk = payload => async dispatch => {
+  try {
+    const res = await axios.put(`api/cart/checkout`, payload)
+
+    // dispatch(getCart(res.data))
   } catch (getCartErr) {
     console.error(getCartErr)
   }

@@ -2,7 +2,13 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import axios from 'axios'
 import {MenuItem, Label, Icon, Modal, Table, Button} from 'semantic-ui-react'
-import {getCartTC, deleteRow, addToCart, changeCount} from '../store/cart'
+import {
+  getCartTC,
+  deleteRow,
+  addToCart,
+  changeCount,
+  updateCart
+} from '../store/cart'
 
 class Cart extends Component {
   constructor() {
@@ -20,7 +26,6 @@ class Cart extends Component {
 
     if (user.id) {
       await fetchTC(user.id)
-      //   console.log('Cart from fetchtc ', cart)
     }
   }
 
@@ -28,6 +33,16 @@ class Cart extends Component {
     //  TODO: configure backend route for the axios call below
     // await axios.delete(`api/cart/${cartItemId}`)
     this.props.deleteItem(cartItemId)
+
+    if (this.props.isLoggedIn) {
+      const thunkLoad = {
+        productId: cartItemId,
+        orderId: this.props.user.orderId,
+        quantity: 0
+      }
+
+      this.props.thunkUpdate(thunkLoad)
+    }
   }
 
   async handleEdit(cartItemId, quant, direction) {
@@ -40,11 +55,28 @@ class Cart extends Component {
     console.log('new quant', quant)
 
     const payload = {id: cartItemId, type: direction}
+
+    const thunkLoad = {
+      productId: cartItemId,
+      orderId: this.props.user.orderId,
+      quantity: quant
+    }
+
     if (quant > 0) {
       this.props.updateItem(payload)
+
+      if (this.props.isLoggedIn) {
+        this.props.thunkUpdate(thunkLoad)
+      }
     }
+
     if (quant === 0) {
       // call delete route
+      this.props.deleteItem(cartItemId)
+
+      if (this.props.isLoggedIn) {
+        this.props.thunkUpdate(thunkLoad)
+      }
     }
   }
 
@@ -162,7 +194,8 @@ class Cart extends Component {
 const mapState = state => {
   return {
     user: state.userReducer,
-    cart: state.cartReducer
+    cart: state.cartReducer,
+    isLoggedIn: !!state.userReducer.id
   }
 }
 
@@ -170,7 +203,8 @@ const mapDispatch = dispatch => {
   return {
     fetchTC: userId => dispatch(getCartTC(userId)),
     updateItem: payload => dispatch(changeCount(payload)),
-    deleteItem: cartItemId => dispatch(deleteRow(cartItemId))
+    deleteItem: cartItemId => dispatch(deleteRow(cartItemId)),
+    thunkUpdate: payload => dispatch(updateCart(payload))
   }
 }
 
